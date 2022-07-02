@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>axeap.core.item &mdash; pyAXEAP 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> pyAXEAP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.core.html">axeap.core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.utils.html">axeap.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.experiment.html">axeap.experiment package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.inspect.html">axeap.inspect package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyAXEAP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>axeap.core.item</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for axeap.core.item</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">.conventions</span> <span class="kn">import</span> <span class="n">PathType</span>
+<span class="kn">from</span> <span class="nn">.signal</span> <span class="kn">import</span> <span class="n">Signal</span>
+
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="c1"># Dev Note: I could try metaclasses but that seems like a rabbit hole of</span>
+<span class="c1"># abstract typing.</span>
+<div class="viewcode-block" id="DataItem"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItem">[docs]</a><span class="k">class</span> <span class="nc">DataItem</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Superclass for all data-containing objects.</span>
+
+<span class="sd">    This is the superclass for objects such as :obj:`.core.scan.Scan` or</span>
+<span class="sd">    :obj:`.core.spectra.Spectra`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TYPE_NAME : :obj:`str`</span>
+<span class="sd">        The name of the data item type, for example &quot;Scan&quot;. Same across all</span>
+<span class="sd">        instances.</span>
+<span class="sd">    name : :obj:`str`</span>
+<span class="sd">        The name of the data item, not necessarily unique.</span>
+<span class="sd">    uuid : :obj:`uuid.UUID`</span>
+<span class="sd">        UUID of the data item. Unique.</span>
+<span class="sd">    meta : :obj:`dict`</span>
+<span class="sd">        Dictionary of metadata describing instance of DataItem.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">TYPE_NAME</span> <span class="o">=</span> <span class="s2">&quot;DataItem&quot;</span>
+
+<div class="viewcode-block" id="DataItem.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItem.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : :obj:`str`, optional</span>
+<span class="sd">            Name to assign to item. Should be human-readable, not necessarily</span>
+<span class="sd">            unique.</span>
+<span class="sd">        meta : :obj:`dict`, optional</span>
+<span class="sd">            Metadata concerning the item. Keys should be strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uuid</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="k">if</span> <span class="n">meta</span> <span class="k">else</span> <span class="p">{}</span></div></div>
+
+
+<div class="viewcode-block" id="Saveable"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.Saveable">[docs]</a><span class="k">class</span> <span class="nc">Saveable</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Superclass for any object that can be saved to a file.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    SAVE_FILE_EXTENTIONS : :obj:`list`</span>
+<span class="sd">        List of strings containing file extensions that the object can be saved</span>
+<span class="sd">        under. Extensions are lowercase and do not include dots (example &quot;txt&quot;</span>
+<span class="sd">        instead of &quot;.TXT&quot;). Should be overwritten in subclass definition.</span>
+<span class="sd">    SAVE_PATH_TYPE : :obj:`.core.conventions.PathType`</span>
+<span class="sd">            Specifies whether the object can be saved as a file or a directory.</span>
+<span class="sd">            Should be overwritten by subclass definition.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">SAVE_FILE_EXTENTIONS</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">SAVE_PATH_TYPE</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">FILE</span>
+
+<div class="viewcode-block" id="Saveable.saveToPath"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.Saveable.saveToPath">[docs]</a>    <span class="k">def</span> <span class="nf">saveToPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save data stored in object to a given path.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : :obj:`pathlib.Path`, :obj:`str`</span>
+<span class="sd">            Path to store object data to. Could be file or directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Saving to path has not been implemented!&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Loadable"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.Loadable">[docs]</a><span class="k">class</span> <span class="nc">Loadable</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Superclass for any object that can be loaded from a file.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    LOAD_FILE_EXTENTIONS : :obj:`list`</span>
+<span class="sd">        List of strings containing file extensions that the object can be loaded</span>
+<span class="sd">        from. Extensions are lowercase and do not include dots (example &quot;txt&quot;</span>
+<span class="sd">        instead of &quot;.TXT&quot;). Should be overwritten by subclass definition.</span>
+<span class="sd">    SAVE_PATH_TYPE : :obj:`.core.conventions.PathType`</span>
+<span class="sd">        Specifies whether the object can be loaded from a file, multiple files,</span>
+<span class="sd">        or a directory. Should be overwritten by subclass but constant across</span>
+<span class="sd">        instances.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">LOAD_FILE_EXTENTIONS</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">LOAD_PATH_TYPE</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">FILE</span>
+
+<div class="viewcode-block" id="Loadable.loadFromFile"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.Loadable.loadFromFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadFromFile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load data from file and use to instantiate class.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        path : :obj:`pathlib.Path`, :obj:`str`</span>
+<span class="sd">            Path of file containing data.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`Loadable`</span>
+<span class="sd">            Instance of object, populated with data from file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Loading from path has not been implemented!&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DataItemSet"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItemSet">[docs]</a><span class="k">class</span> <span class="nc">DataItemSet</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Set of :obj:`DataItem` objects.</span>
+
+<span class="sd">    This is essentially just a list of :obj:`DataItem` objects but</span>
+<span class="sd">    with the additional features of allowing items to be &quot;selected&quot; or not and</span>
+<span class="sd">    emitting signals when the membership of the :obj:`DataItemSet` changes or</span>
+<span class="sd">    the selection status of one of the :obj:`DataItem`&#39;s changes. This is</span>
+<span class="sd">    the superclass for :obj:`.core.scan.ScanSet`, :obj:`.core.roi.ROISet`, and</span>
+<span class="sd">    :obj:`.core.spectra.SpectraSet`.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">        Though this uses a list to store the underlying data, users should not</span>
+<span class="sd">        depend on the order of the items in the set.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    itemadded : :obj:`.core.signal.Signal`</span>
+<span class="sd">        When item is added, signal is emitted with item as argument.</span>
+<span class="sd">    itemremoved : :obj:`.core.signal.Signal`</span>
+<span class="sd">        When item is removed, signal emitted with item as argument.</span>
+<span class="sd">    selectionchanged : :obj:`.core.signal.Signal`</span>
+<span class="sd">        When item selection is changed, signal emitted with signature (item,</span>
+<span class="sd">        selection).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DataItemSet.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItemSet.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selection_default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        items : :obj:`list`, optional</span>
+<span class="sd">            List of :obj:`DataItem` objects to initially populate the</span>
+<span class="sd">            :obj:`DataItemSet`.</span>
+<span class="sd">        selection_default : :obj:`bool`, optional</span>
+<span class="sd">            Default selection value for items after being added to set. Default</span>
+<span class="sd">            default value is `True`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemadded</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemremoved</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selectionchanged</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selections</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selection_default</span> <span class="o">=</span> <span class="n">selection_default</span>
+
+        <span class="k">if</span> <span class="n">items</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataItemSet.add"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItemSet.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add :obj:`DataItem` to set.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selections</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemadded</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataItemSet.remove"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItemSet.remove">[docs]</a>    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove :obj:`DataItem` from set.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">selections</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">itemremoved</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataItemSet.setSelection"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItemSet.setSelection">[docs]</a>    <span class="k">def</span> <span class="nf">setSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">sel</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change selection status of :obj:`DataItem`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        item : :obj:`DataItem`</span>
+<span class="sd">            Item whose selection status to change.</span>
+<span class="sd">        sel : :obj:`bool`</span>
+<span class="sd">            New selection status.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selections</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">!=</span> <span class="n">sel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selections</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selectionchanged</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">sel</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataItemSet.getSelection"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItemSet.getSelection">[docs]</a>    <span class="k">def</span> <span class="nf">getSelection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get selection status of item.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">selections</span><span class="p">[</span><span class="n">item</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="DataItemSet.getSelected"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.item.DataItemSet.getSelected">[docs]</a>    <span class="k">def</span> <span class="nf">getSelected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get list of selected items.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSelection</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span></div>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get iterator over all items in set (not just selected ones).&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Argonne National Laboratory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

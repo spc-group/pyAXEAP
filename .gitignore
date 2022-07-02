@@ -1,0 +1,8 @@
+# For some reason it captures local machine paths, so exclude it
+docs/.doctrees
+
+# Python
+__pycache__
+
+# IPython
+examples/.ipynb_checkpoints

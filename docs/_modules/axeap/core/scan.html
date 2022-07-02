@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>axeap.core.scan &mdash; pyAXEAP 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> pyAXEAP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.core.html">axeap.core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.utils.html">axeap.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.experiment.html">axeap.experiment package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.inspect.html">axeap.inspect package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyAXEAP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>axeap.core.scan</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for axeap.core.scan</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;Scan.</span>
+<span class="sd">The Scan class represents an image from a PAD detector. This file contains all</span>
+<span class="sd">code relating to Scans.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">&#39;axeap&#39;</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">scipy.ndimage.filters</span> <span class="kn">import</span> <span class="n">gaussian_filter</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">watchdog.observers</span> <span class="kn">import</span> <span class="n">Observer</span>
+<span class="kn">from</span> <span class="nn">watchdog.events</span> <span class="kn">import</span> <span class="n">FileSystemEventHandler</span>
+
+<span class="kn">from</span> <span class="nn">.item</span> <span class="kn">import</span> <span class="n">DataItem</span><span class="p">,</span> <span class="n">DataItemSet</span><span class="p">,</span> <span class="n">Saveable</span><span class="p">,</span> <span class="n">Loadable</span>
+<span class="kn">from</span> <span class="nn">.signal</span> <span class="kn">import</span> <span class="n">Signal</span>
+<span class="kn">from</span> <span class="nn">.conventions</span> <span class="kn">import</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">PathType</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">get_trailing_number</span>
+
+
+<div class="viewcode-block" id="Scan"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan">[docs]</a><span class="k">class</span> <span class="nc">Scan</span><span class="p">(</span><span class="n">DataItem</span><span class="p">,</span> <span class="n">Saveable</span><span class="p">,</span> <span class="n">Loadable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing a scan image taken with a XES detector.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">TYPE_NAME</span> <span class="o">=</span> <span class="s2">&quot;Scan&quot;</span>
+    <span class="n">LOAD_FILE_EXTENTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tiff&#39;</span><span class="p">,</span><span class="s1">&#39;tif&#39;</span><span class="p">,</span><span class="s1">&#39;scan&#39;</span><span class="p">]</span>
+    <span class="n">SAVE_PATH_TYPE</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">FILE</span>
+    <span class="n">SAVE_FILE_EXTENTIONS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;tif&#39;</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="s1">&#39;scan&#39;</span><span class="p">]</span>
+    <span class="n">SAVE_PATH_TYPE</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">FILE</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Scan&quot;</span>
+
+<div class="viewcode-block" id="Scan.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">,</span> <span class="n">imgspec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        img : :obj:`numpy.ndarray`</span>
+<span class="sd">            2D array of intensity values</span>
+<span class="sd">        name : :obj:`str`</span>
+<span class="sd">            Name for the scan.</span>
+<span class="sd">        cache : :obj:`bool`, :obj:`dict`</span>
+<span class="sd">            Pass :obj:`False` to turn off cacheing of images. An</span>
+<span class="sd">            already-prepared cache of images in the form a dictionary of image</span>
+<span class="sd">            specs to images can also be passed. Do not use unless you know what</span>
+<span class="sd">            you&#39;re doing.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">DataItem</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">img</span> <span class="o">=</span> <span class="n">img</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">default_imgspec</span> <span class="o">=</span> <span class="n">imgspec</span> <span class="k">if</span> <span class="n">imgspec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">IS</span><span class="o">.</span><span class="n">NOCHANGE</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cache</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span> <span class="o">=</span> <span class="n">cache</span>
+        <span class="k">elif</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">cache</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">meta</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">|=</span> <span class="n">meta</span></div>
+
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`str`</span>
+<span class="sd">            Representation of scan consists of name and uuid.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Scan(name:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">,uuid:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">uuid</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dimensions of scan image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`tuple`</span>
+<span class="sd">            Dimensions of scan image in form (x,y).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getImg</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+
+<div class="viewcode-block" id="Scan.getImgFromSpecs"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan.getImgFromSpecs">[docs]</a>    <span class="k">def</span> <span class="nf">getImgFromSpecs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imgspec</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get image after applying imagespec.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        imgspec : :obj:`ImageSpec`)</span>
+<span class="sd">            Specifications for image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`numpy.ndarray`</span>
+<span class="sd">            2D array representing image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">imgspec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span><span class="p">[</span><span class="n">imgspec</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">imgspec</span> <span class="o">==</span> <span class="n">IS</span><span class="o">.</span><span class="n">NOCHANGE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">img</span>
+        <span class="n">cuts</span> <span class="o">=</span> <span class="n">imgspec</span><span class="p">[</span><span class="s1">&#39;cuts&#39;</span><span class="p">]</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">imgspec</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">]</span>
+        <span class="n">blur</span> <span class="o">=</span> <span class="n">imgspec</span><span class="p">[</span><span class="s1">&#39;blur&#39;</span><span class="p">]</span>
+        <span class="n">roi</span> <span class="o">=</span> <span class="n">imgspec</span><span class="p">[</span><span class="s1">&#39;roi&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">cuts</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">blur</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">scale</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">img</span>
+        <span class="k">if</span> <span class="n">cuts</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">img</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="p">(</span><span class="n">img</span><span class="o">&lt;</span><span class="n">cuts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">img</span><span class="o">&gt;</span><span class="n">cuts</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">blur</span><span class="o">!=-</span><span class="mi">1</span><span class="p">:</span> <span class="n">img</span> <span class="o">=</span> <span class="n">gaussian_filter</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">blur</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scale</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">*=</span> <span class="n">scale</span>
+        <span class="k">if</span> <span class="n">roi</span><span class="o">!=-</span><span class="mi">1</span><span class="p">:</span> <span class="n">img</span> <span class="o">=</span> <span class="n">roi</span><span class="o">.</span><span class="n">_selectArea</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+        <span class="n">img</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">writeable</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span><span class="p">[</span><span class="n">imgspec</span><span class="p">]</span> <span class="o">=</span> <span class="n">img</span>
+        <span class="k">return</span> <span class="n">img</span></div>
+
+    <span class="k">def</span> <span class="nf">_getISFromArgs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">imgspec</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">imgspec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_imgspec</span> <span class="c1"># Called without args so pass default</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">imgspec</span> <span class="o">=</span> <span class="n">IS</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">default_imgspec</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="c1"># No ImageSpec object passed so create it</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>  <span class="c1"># ImageSpec object passed, use it</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">IS</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;If ImageSpec object is passed, keyword args are ignored.&#39;</span><span class="p">)</span>
+                <span class="n">imgspec</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="nb">dict</span><span class="p">):</span> <span class="n">imgspec</span> <span class="o">=</span> <span class="n">IS</span><span class="p">(</span><span class="o">**</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Only an ImageSpec object can be passed as a positional argument.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Only one ImageSpec object can be passed as a positional argument.&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">imgspec</span>
+
+
+<div class="viewcode-block" id="Scan.getImg"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan.getImg">[docs]</a>    <span class="k">def</span> <span class="nf">getImg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get 2D array of intensity values associated with scan, optionally</span>
+<span class="sd">        pre-processed.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cuts : :obj:`tuple`, optional</span>
+<span class="sd">            Pair of values (l,h) where any pixel values with intensity &lt;l or</span>
+<span class="sd">            &gt;h are set to 0.</span>
+<span class="sd">        scale : :obj:`float`, optional</span>
+<span class="sd">            Number to scale all intensity values in image by.</span>
+<span class="sd">        blur : :obj:`int`, optional</span>
+<span class="sd">            Kernel size of gaussian blur to apply to image.</span>
+<span class="sd">        roi : :obj:`.core.ROI`, optional</span>
+<span class="sd">            Region of interest to which to restrict image. The rest of the image</span>
+<span class="sd">            will be masked off.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`numpy.ndarray`</span>
+<span class="sd">            2D array of intensity values representing image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">imgspec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getISFromArgs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getImgFromSpecs</span><span class="p">(</span><span class="n">imgspec</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Scan.mod"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan.mod">[docs]</a>    <span class="k">def</span> <span class="nf">mod</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return scan with a different default imgspec.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        cuts : :obj:`tuple`, optional</span>
+<span class="sd">            Pair of values (l,h) where any pixel values with intensity &lt;l or</span>
+<span class="sd">            &gt;h are set to 0.</span>
+<span class="sd">        scale : :obj:`float`, optional</span>
+<span class="sd">            Number to scale all intensity values in image by.</span>
+<span class="sd">        blur : :obj:`int`, optional</span>
+<span class="sd">            Kernel size of gaussian blur to apply to image.</span>
+<span class="sd">        roi : :obj:`.core.ROI`, optional</span>
+<span class="sd">            Region of interest to which to restrict image. The rest of the image</span>
+<span class="sd">            will be masked off.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`Scan`</span>
+<span class="sd">            Scan object with given default imgspec.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">imgspec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getISFromArgs</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Scan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">img</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">imgspec</span><span class="o">=</span><span class="n">imgspec</span><span class="p">,</span>
+            <span class="n">meta</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_imgcache</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Scan.loadImageFromFile"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan.loadImageFromFile">[docs]</a>    <span class="k">def</span> <span class="nf">loadImageFromFile</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load an image from a file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fpath : :obj:`pathlib.Path`, :obj:`str`</span>
+<span class="sd">            Path of image file (either TIF or NPY).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            `numpy.ndarray`: 2D image data array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fpath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="c1"># Convert to Path in case passed as str</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;.tif&#39;</span> <span class="ow">or</span> <span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;.tiff&#39;</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                <span class="c1">#img = np.array(Image.open(fpath))</span>
+                <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">swapaxes</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">img</span>
+        <span class="k">elif</span> <span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;.npy&#39;</span><span class="p">:</span>    <span class="c1"># Only for loading .npy files exported by Scan</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Cannot load Scan from &quot;</span><span class="si">{</span><span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="si">}</span><span class="s1">&quot; file. Only TIF and NPY supported.&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Scan.loadFromPath"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan.loadFromPath">[docs]</a>    <span class="k">def</span> <span class="nf">loadFromPath</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load scan data from file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fpath : :obj:`pathlib.Path`, :obj:`str`</span>
+<span class="sd">            Path to file containing image data.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        :obj:`Scan`</span>
+<span class="sd">            Scan object containing data from file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fpath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="c1"># Convert to Path object in case path is string</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Scan</span><span class="p">(</span><span class="n">Scan</span><span class="o">.</span><span class="n">loadImageFromFile</span><span class="p">(</span><span class="n">fpath</span><span class="p">),</span><span class="n">name</span><span class="o">=</span><span class="n">fpath</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;fpath&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fpath</span>
+        <span class="k">return</span> <span class="n">s</span></div>
+
+
+<div class="viewcode-block" id="Scan.saveToPath"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan.saveToPath">[docs]</a>    <span class="k">def</span> <span class="nf">saveToPath</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save scan to file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fpath : :obj:`pathlib.Path`, :obj:`str`</span>
+<span class="sd">            Path of file to which to save scan.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fpath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="c1"># Convert to Path in case passed as str</span>
+        <span class="k">if</span> <span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;.tif&#39;</span> <span class="ow">or</span> <span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;.tiff&#39;</span><span class="p">:</span>
+            <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_img</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;.npy&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_img</span><span class="p">,</span> <span class="n">allow_pickle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Cannot save Scan to &quot;</span><span class="si">{</span><span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s1">&quot; file. Only TIF and NPY supported.&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Scan.count"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.Scan.count">[docs]</a>    <span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Count total intensity within ROI.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        roi : :obj:`.core.roi.ROI`, optional</span>
+<span class="sd">            Region of Interest to restrict count to. If not given, region is</span>
+<span class="sd">            considered to be entire scan.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        :obj:`int`</span>
+<span class="sd">            Total intensity summed over region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">roi</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getImg</span><span class="p">(</span><span class="n">roi</span><span class="o">=</span><span class="n">roi</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getImg</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">img</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ImageSpec"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.ImageSpec">[docs]</a><span class="k">class</span> <span class="nc">ImageSpec</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class representing specifications applied to scan image.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">NOCUTS</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1"># (0,100000)</span>
+    <span class="n">NOSCALE</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">NOBLUR</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">NOROI</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+<div class="viewcode-block" id="ImageSpec.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.ImageSpec.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+        <span class="n">basespec</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">cuts</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">scale</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">blur</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">roi</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        basespec : :obj:`ImageSpec`</span>
+<span class="sd">            :obj:`ImageSpec` to use as default values.</span>
+<span class="sd">        cuts : :obj:`tuple`, optional</span>
+<span class="sd">            Pair of values (l,h) where any pixel values with intensity &lt;l or</span>
+<span class="sd">            &gt;h are set to 0.</span>
+<span class="sd">        scale : :obj:`float`, optional</span>
+<span class="sd">            Number to scale all intensity values in image by.</span>
+<span class="sd">        blur : :obj:`int`, optional</span>
+<span class="sd">            Kernel size of gaussian blur to apply to image.</span>
+<span class="sd">        roi : :obj:`.core.ROI`, optional</span>
+<span class="sd">            Region of interest to which to restrict image. The rest of the image</span>
+<span class="sd">            will be masked off.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">default</span> <span class="o">=</span> <span class="n">basespec</span> <span class="k">if</span> <span class="n">basespec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ImageSpec</span><span class="o">.</span><span class="n">NOCHANGE</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;cuts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cuts</span> <span class="k">if</span> <span class="n">cuts</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">default</span><span class="p">[</span><span class="s1">&#39;cuts&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale</span> <span class="k">if</span> <span class="n">scale</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">default</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;blur&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">blur</span> <span class="k">if</span> <span class="n">blur</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">default</span><span class="p">[</span><span class="s1">&#39;blur&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;roi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">roi</span> <span class="k">if</span> <span class="n">roi</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">default</span><span class="p">[</span><span class="s1">&#39;roi&#39;</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">())))</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">ImageSpec</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">ImageSpec</span><span class="p">(</span><span class="o">**</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">==</span><span class="nb">hash</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ImageSpec.NOCHANGE"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.ImageSpec.NOCHANGE">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">NOCHANGE</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;An ImageSpec that signifies no change to be made to an image.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ImageSpec</span><span class="p">({},</span> <span class="n">cuts</span><span class="o">=</span><span class="n">ImageSpec</span><span class="o">.</span><span class="n">NOCUTS</span><span class="p">,</span> <span class="n">blur</span><span class="o">=</span><span class="n">ImageSpec</span><span class="o">.</span><span class="n">NOBLUR</span><span class="p">,</span>
+                        <span class="n">scale</span><span class="o">=</span><span class="n">ImageSpec</span><span class="o">.</span><span class="n">NOSCALE</span><span class="p">,</span> <span class="n">roi</span><span class="o">=</span><span class="n">ImageSpec</span><span class="o">.</span><span class="n">NOROI</span><span class="p">)</span></div></div>
+
+<span class="n">IS</span> <span class="o">=</span> <span class="n">ImageSpec</span>
+<span class="sd">&quot;&quot;&quot;Alias for ImageSpec.&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="ScanSet"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.ScanSet">[docs]</a><span class="k">class</span> <span class="nc">ScanSet</span><span class="p">(</span><span class="n">DataItemSet</span><span class="p">,</span> <span class="n">Loadable</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;:obj:`.core.item.DataItemSet` for :obj:`Scan` objects.&quot;&quot;&quot;</span>
+
+    <span class="n">TYPE_NAME</span> <span class="o">=</span> <span class="s2">&quot;Scan Set&quot;</span>
+    <span class="n">LOAD_PATH_TYPE</span> <span class="o">=</span> <span class="n">PathType</span><span class="o">.</span><span class="n">DIR</span>
+
+    <span class="n">DEFAULT_IMGDIMS</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scans</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">imgdims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">selection_default</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;scanset&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">imgdims</span> <span class="o">=</span> <span class="n">imgdims</span>
+        <span class="n">DataItemSet</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">scans</span><span class="p">,</span> <span class="n">selection_default</span><span class="o">=</span><span class="n">selection_default</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dims</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgdims</span>
+
+<div class="viewcode-block" id="ScanSet.loadFromPath"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.ScanSet.loadFromPath">[docs]</a>    <span class="k">def</span> <span class="nf">loadFromPath</span><span class="p">(</span><span class="n">dpath</span><span class="p">,</span> <span class="n">calibinfopath</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">dpath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dpath</span><span class="p">)</span>
+        <span class="n">fpaths</span> <span class="o">=</span> <span class="p">[</span><span class="n">fpath</span> <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="n">dpath</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fpath</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">Scan</span><span class="o">.</span><span class="n">LOAD_FILE_EXTENTIONS</span><span class="p">]</span>
+        <span class="n">fpaths</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fpaths</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">get_trailing_number</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">stem</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)))</span>
+        <span class="n">scans</span> <span class="o">=</span> <span class="p">[</span><span class="n">Scan</span><span class="o">.</span><span class="n">loadFromPath</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="k">for</span> <span class="n">fpath</span> <span class="ow">in</span> <span class="n">fpaths</span><span class="p">]</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="n">ScanSet</span><span class="p">(</span><span class="n">scans</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">dpath</span><span class="o">.</span><span class="n">stem</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">calibinfopath</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ss</span><span class="o">.</span><span class="n">addCalibRunInfo</span><span class="p">(</span><span class="n">CalibRunInfo</span><span class="p">(</span><span class="n">calibinfopath</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">allfiles</span> <span class="o">=</span> <span class="n">dpath</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
+            <span class="n">cri</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">allfiles</span><span class="p">:</span>
+                <span class="n">ext</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">ext</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">cri</span> <span class="o">=</span> <span class="n">CalibRunInfo</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                    <span class="k">except</span><span class="p">:</span>
+                        <span class="o">...</span>
+            <span class="k">if</span> <span class="n">cri</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ss</span><span class="o">.</span><span class="n">addCalibRunInfo</span><span class="p">(</span><span class="n">cri</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ss</span></div>
+
+
+<div class="viewcode-block" id="ScanSet.add"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.ScanSet.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scan</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add Scan to set.</span>
+
+<span class="sd">        See :obj:`.core.item.DataItemSet.add`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgdims</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">scan</span><span class="o">.</span><span class="n">dims</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgdims</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;All scans in set must have dimensions </span><span class="si">{</span><span class="n">imgdims</span><span class="si">}</span><span class="s1">. Scan has dimensions </span><span class="si">{</span><span class="n">s</span><span class="o">.</span><span class="n">dims</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">imgdims</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="n">dims</span>
+        <span class="n">DataItemSet</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scan</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ScanSet.composite"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.ScanSet.composite">[docs]</a>    <span class="k">def</span> <span class="nf">composite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">imgkwargs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create scan by adding images from all selected scans in set.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        imgkwargs : :obj:`ImageSpec`</span>
+<span class="sd">            Specifications to apply to image extracted from each</span>
+<span class="sd">            :obj:`Scan`.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            :obj:`Scan`</span>
+<span class="sd">                Scan object representing combined image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">selectedscans</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getSelectedScans</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">selectedscans</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;No scans selected.&quot;</span><span class="p">)</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgdims</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">imgdims</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">DEFAULT_IMGDIMS</span>
+            <span class="k">return</span> <span class="n">Scan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">dims</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">imgkwargs</span><span class="p">:</span> <span class="n">imgkwargs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">selectedscans</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">selectedscans</span><span class="p">)</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">selectedscans</span><span class="p">)</span><span class="o">.</span><span class="n">getImg</span><span class="p">(</span><span class="o">**</span><span class="n">imgkwargs</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">selectedscans</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">+=</span> <span class="n">s</span><span class="o">.</span><span class="n">getImg</span><span class="p">(</span><span class="o">**</span><span class="n">imgkwargs</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Scan</span><span class="p">(</span><span class="n">i</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ScanSet.addCalibRunInfo"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.ScanSet.addCalibRunInfo">[docs]</a>    <span class="k">def</span> <span class="nf">addCalibRunInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runinfo</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Populate metadata of scans with calibration run information (incident</span>
+<span class="sd">            energy, intensity, etc).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        runinfo : :obj:`CalibRunInfo`</span>
+<span class="sd">            Calibration run information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">runinfo</span><span class="o">.</span><span class="n">energies</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Number of scans in calibration run information&quot;</span> \
+                <span class="sa">f</span><span class="s2">&quot; file (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">runinfo</span><span class="o">.</span><span class="n">energies</span><span class="p">)</span><span class="si">}</span><span class="s2">)does not match number of scans in&quot;</span> \
+                <span class="sa">f</span><span class="s2">&quot; scan set (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="si">}</span><span class="s2">).&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">runinfo</span><span class="o">.</span><span class="n">energies</span><span class="p">):</span>
+                <span class="n">s</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;IncidentEnergy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span></div></div>
+
+
+<div class="viewcode-block" id="CalibRunInfo"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.CalibRunInfo">[docs]</a><span class="k">class</span> <span class="nc">CalibRunInfo</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class that represents the settings used during the collection of a set of</span>
+<span class="sd">    calibration scans.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energies : :obj:`list`</span>
+<span class="sd">        List of energies scans were taken at.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CalibRunInfo.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.CalibRunInfo.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fpath : :obj:`pathlib.Path`, :obj:`str`</span>
+<span class="sd">            Path of file containing information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_table</span> <span class="o">=</span> <span class="n">CalibRunInfo</span><span class="o">.</span><span class="n">_readDataTable</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Mono Energy (alt) *&#39;</span><span class="p">:</span><span class="s1">&#39;Energy&#39;</span><span class="p">},</span>
+            <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get list of energies used to take scans&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="p">[</span><span class="s1">&#39;Energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<div class="viewcode-block" id="CalibRunInfo.getEnergy"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.CalibRunInfo.getEnergy">[docs]</a>    <span class="k">def</span> <span class="nf">getEnergy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get energy used to take scan by scan number.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : :obj:`int`</span>
+<span class="sd">            Index of scan (0 for first scan, 1 for second, etc).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        :obj:`float`</span>
+<span class="sd">            Energy of scan</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CalibRunInfo.getIncidentIntensity"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.scan.CalibRunInfo.getIncidentIntensity">[docs]</a>    <span class="k">def</span> <span class="nf">getIncidentIntensity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get incident intensity that a scan was taken with.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        i : :obj:`int`, :obj:`float`</span>
+<span class="sd">            Scan number or scan energy.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`float`</span>
+<span class="sd">            Incident x-ray intensity scan was taken with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">energies</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="p">[</span><span class="s1">&#39;Energy&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">i</span><span class="p">,</span> <span class="s1">&#39;I0&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table</span><span class="p">[</span><span class="s1">&#39;I0&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span></div>
+
+    <span class="k">def</span> <span class="nf">_readDataTable</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Function that reads settings file from run and loads data on each scan into</span>
+<span class="sd">        a Pandas table with appropriate column headers.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fpath : :obj:`pathlib.Path`, :obj:`str`</span>
+<span class="sd">            Path of file.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        `pandas.DataFrame`</span>
+<span class="sd">            Table containing data from file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fpath</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="c1"># In case string was passed</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">fpath</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+        <span class="c1"># Find index of heading block</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;Here is a readable list of column headings:&#39;</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not find heading block in calibration info file.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">hblockstart</span> <span class="o">=</span> <span class="n">indices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">headings</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">hblockstart</span><span class="p">:]:</span> <span class="c1"># Looking at lines starting at beginning of heading block</span>
+            <span class="n">l</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span> <span class="c1"># Remove comment markers</span>
+            <span class="c1"># Strings are formatted like:</span>
+            <span class="c1"># 1) headingA 3) headingC</span>
+            <span class="c1"># 2) headingB 4) headingD</span>
+            <span class="n">hnums</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;)&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+\)&#39;</span><span class="p">,</span> <span class="n">l</span><span class="p">)]</span> <span class="c1"># Split at the numbers</span>
+            <span class="n">hs</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+\) &#39;</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">s</span><span class="o">.</span><span class="n">isspace</span><span class="p">()]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">hs</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># Quit if strings no longer formatted like above</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">hnums</span><span class="p">,</span> <span class="n">hs</span><span class="p">):</span>
+                    <span class="n">headings</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="c1"># Strip whitespace and associate heading with number</span>
+        <span class="n">headings</span> <span class="o">=</span> <span class="p">[</span><span class="n">headings</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">headings</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="c1"># Turn into list in-order</span>
+        <span class="c1"># Read table and use extracted heading names</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">comment</span><span class="o">=</span><span class="s1">&#39;#&#39;</span><span class="p">,</span>
+            <span class="n">names</span><span class="o">=</span><span class="n">headings</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Argonne National Laboratory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

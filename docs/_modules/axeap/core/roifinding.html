@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>axeap.core.roifinding &mdash; pyAXEAP 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> pyAXEAP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.core.html">axeap.core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.utils.html">axeap.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.experiment.html">axeap.experiment package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.inspect.html">axeap.inspect package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyAXEAP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>axeap.core.roifinding</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for axeap.core.roifinding</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Automatic Calculation of Regions of Interest.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">cv2</span>
+
+<span class="kn">from</span> <span class="nn">.conventions</span> <span class="kn">import</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span>
+<span class="kn">from</span> <span class="nn">.scan</span> <span class="kn">import</span> <span class="n">Scan</span><span class="p">,</span> <span class="n">ScanSet</span>
+<span class="kn">from</span> <span class="nn">.roi</span> <span class="kn">import</span> <span class="n">HROI</span><span class="p">,</span> <span class="n">VROI</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">linearoverlap</span><span class="p">,</span> <span class="n">separateSpans</span>
+
+<span class="c1"># # Return ComboROI with background guesses</span>
+<span class="c1"># def findBackground(ss, tile_dims=None, mindivisions=10):</span>
+<span class="c1">#     if tile_dims is None:</span>
+<span class="c1">#         shorterdim = np.argmin(ss.dims)</span>
+<span class="c1">#         d = ss.dims[shorterdim]/mindivisions</span>
+<span class="c1">#         tile_dims = (d,d)</span>
+<span class="c1">#</span>
+<span class="c1">#     tilemeans = np.zeros(shape=(20,10,maximg+1))</span>
+<span class="c1">#     regs = [[0]*10 for i in range(20)]</span>
+<span class="c1">#     for i in range(20):</span>
+<span class="c1">#         for j in range(10):</span>
+<span class="c1">#             reg = RROI((int(boxdims[X]*i),int(boxdims[Y]*j)),(int(boxdims[X]*(i+1)),int(boxdims[Y]*(j+1))))</span>
+<span class="c1">#             regs[i][j] = reg</span>
+<span class="c1">#             for n,s in enumerate(ss.scans[:maximg+1]):</span>
+<span class="c1">#                 boxmeans[i,j,n] = np.mean(s.getImg(roi=reg))</span>
+<span class="c1">#     regs = np.array(regs)</span>
+<span class="c1">#     boxstds = np.std(boxmeans,axis=2)</span>
+<span class="c1">#     bkgboxindices = np.where(boxstds&lt;np.mean(boxstds)/10)</span>
+<span class="c1">#     bkgregs = regs[bkgboxindices[0], bkgboxindices[1]]</span>
+<span class="c1">#     return ComboROI(*bkgregs)</span>
+<span class="c1">#</span>
+<span class="c1"># def guessLowcut(s, background=None):</span>
+<span class="c1">#     ... # Guess locut that will eliminate background</span>
+
+<div class="viewcode-block" id="calcHROIs"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roifinding.calcHROIs">[docs]</a><span class="k">def</span> <span class="nf">calcHROIs</span><span class="p">(</span>
+    <span class="n">scan</span><span class="p">,</span>
+    <span class="n">min_width</span><span class="p">,</span>
+    <span class="n">group_buffer</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">return_lines</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Static function to separate image into columns based on line segments found</span>
+<span class="sd">    in image.</span>
+
+<span class="sd">    This works by combining line segements that overlap in their horizontal</span>
+<span class="sd">    ranges by more than 50% of their length to form groups. These groups are</span>
+<span class="sd">    then trimmed so as to not overlap. This is meant to be used with _calcLines</span>
+<span class="sd">    to find the horizontal ranges of pixels in the scan image that correspond to</span>
+<span class="sd">    each crystal. However, if two crystals are lined up such that they produce</span>
+<span class="sd">    a single line segment in the image, this function will create one group</span>
+<span class="sd">    spanning both crystals.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scan : :obj:`.core.scan.Scan`</span>
+<span class="sd">        Scan to calculate horizontal regions of interest for.</span>
+<span class="sd">    group_buffer : :obj:`int`</span>
+<span class="sd">        Minimum number of pixels to separate groups by.</span>
+<span class="sd">    return_lines : :obj:`bool`</span>
+<span class="sd">        Whether or not to return the lines segments detected in the image.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :obj:`list`</span>
+<span class="sd">        List of :obj:`core.roi.HROI`&#39;s representing regions corresponding to</span>
+<span class="sd">        each crystal.</span>
+<span class="sd">    :obj:`np.ndarray`, optional</span>
+<span class="sd">        Array of line segments detected in image, encoded as [[x1,y1],[x2,y2]].</span>
+<span class="sd">        Returned if ``return_lines`` is set :obj:`True`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="n">mod</span><span class="p">(</span><span class="n">blur</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">lines2d</span> <span class="o">=</span> <span class="n">calcHorizontalLineSegments</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">min_width</span><span class="p">))</span>
+    <span class="n">flattened</span> <span class="o">=</span> <span class="p">[[</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">X</span><span class="p">],</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">X</span><span class="p">]]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines2d</span><span class="p">]</span> <span class="c1"># Flatten to just x coords</span>
+    <span class="n">midyvals</span> <span class="o">=</span> <span class="p">[(</span><span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">Y</span><span class="p">]</span><span class="o">+</span><span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">Y</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines2d</span><span class="p">]</span> <span class="c1"># Midpoint y values</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;flat&#39;</span><span class="p">:</span><span class="n">flattened</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="s1">&#39;midy&#39;</span><span class="p">:</span> <span class="n">midyvals</span><span class="p">[</span><span class="n">i</span><span class="p">]}</span> \
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flattened</span><span class="p">))]</span>
+    <span class="c1"># Combine overlapping lines</span>
+    <span class="n">checkcomplete</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">checkcomplete</span><span class="p">:</span>
+        <span class="n">matchfound</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">l1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">l2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">l1</span><span class="o">==</span><span class="n">l2</span><span class="p">:</span> <span class="k">continue</span>
+                <span class="n">flat1</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">l1</span><span class="p">][</span><span class="s1">&#39;flat&#39;</span><span class="p">]</span>
+                <span class="n">flat2</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">l2</span><span class="p">][</span><span class="s1">&#39;flat&#39;</span><span class="p">]</span>
+                <span class="n">overlap</span> <span class="o">=</span> <span class="n">linearoverlap</span><span class="p">(</span><span class="n">flat1</span><span class="p">,</span> <span class="n">flat2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">overlap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span> <span class="ow">or</span> <span class="n">overlap</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">:</span>
+                    <span class="n">newflat</span> <span class="o">=</span> <span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">flat1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">flat2</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">max</span><span class="p">(</span><span class="n">flat1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">flat2</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+                    <span class="n">newmidy</span> <span class="o">=</span> <span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">l1</span><span class="p">][</span><span class="s1">&#39;midy&#39;</span><span class="p">]</span><span class="o">+</span><span class="n">lines</span><span class="p">[</span><span class="n">l2</span><span class="p">][</span><span class="s1">&#39;midy&#39;</span><span class="p">])</span><span class="o">/</span><span class="mi">2</span>
+                    <span class="n">newline</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;flat&#39;</span><span class="p">:</span><span class="n">newflat</span><span class="p">,</span> <span class="s1">&#39;midy&#39;</span><span class="p">:</span><span class="n">newmidy</span><span class="p">}</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span><span class="n">l2</span><span class="p">))</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">l1</span><span class="p">,</span><span class="n">l2</span><span class="p">))</span>
+                    <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">newline</span><span class="p">)</span>
+                    <span class="n">matchfound</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">break</span>
+            <span class="k">if</span> <span class="n">matchfound</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">matchfound</span><span class="p">:</span>
+            <span class="n">checkcomplete</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="p">[</span><span class="n">l</span><span class="p">[</span><span class="s1">&#39;flat&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span>
+    <span class="c1"># Eliminate overlap between groups</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">separateSpans</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="n">group_buffer</span><span class="p">)</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">groups</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">groups</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])]</span>
+    <span class="n">hrois</span> <span class="o">=</span> <span class="p">[</span><span class="n">HROI</span><span class="p">(</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">groups</span> <span class="k">if</span> <span class="n">g</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">g</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">min_width</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">return_lines</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hrois</span><span class="p">,</span> <span class="n">lines2d</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hrois</span></div>
+
+
+<div class="viewcode-block" id="calcHorizontalLineSegments"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roifinding.calcHorizontalLineSegments">[docs]</a><span class="k">def</span> <span class="nf">calcHorizontalLineSegments</span><span class="p">(</span><span class="n">scan</span><span class="p">,</span> <span class="n">min_line_length</span><span class="p">,</span> <span class="n">anglerange</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function that calculates line segments from scan.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scan : :obj:`.scan.Scan`</span>
+<span class="sd">        Scan to calculate lines from.</span>
+<span class="sd">    min_line_length : :obj:`float`</span>
+<span class="sd">        Minimum length line segments must be.</span>
+<span class="sd">    anglerange : :obj:`tuple`</span>
+<span class="sd">        Range of angles that line segments must be within. Horizontal is 0,</span>
+<span class="sd">        vertical is pi/2. Range encoded as (t1,t2).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :obj:`numpy.ndarray`</span>
+<span class="sd">        Array of line segments encoded as [[x1,y1],[x2,y2]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">anglerange</span> <span class="o">=</span> <span class="n">anglerange</span> <span class="ow">or</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">fld</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">ximgproc</span><span class="o">.</span><span class="n">createFastLineDetector</span><span class="p">(</span><span class="n">length_threshold</span><span class="o">=</span><span class="n">min_line_length</span><span class="p">,</span>\
+                                                <span class="n">do_merge</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="n">getImg</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">img</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">img</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">255</span>
+    <span class="n">rawlines</span> <span class="o">=</span> <span class="n">fld</span><span class="o">.</span><span class="n">detect</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">rawlines</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">rawlines</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">,:]</span>
+    <span class="n">lines</span><span class="p">[:,[</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[:,[</span><span class="n">Y</span><span class="p">,</span><span class="n">X</span><span class="p">]]</span>     <span class="c1"># Flip coords to x,y</span>
+    <span class="n">lines</span><span class="p">[:,[</span><span class="n">X</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">Y</span><span class="o">+</span><span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[:,[</span><span class="n">Y</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">X</span><span class="o">+</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">tan_angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">((</span><span class="n">lines</span><span class="p">[:,</span><span class="n">Y</span><span class="p">]</span><span class="o">-</span><span class="n">lines</span><span class="p">[:,</span><span class="n">Y</span><span class="o">+</span><span class="mi">2</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">lines</span><span class="p">[:,</span><span class="n">X</span><span class="p">]</span><span class="o">-</span><span class="n">lines</span><span class="p">[:,</span><span class="n">X</span><span class="o">+</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="n">filteredlines</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">lines</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span>
+        <span class="n">tan_angles</span><span class="o">&lt;</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">anglerange</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">tan_angles</span><span class="o">&gt;</span><span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">anglerange</span><span class="p">[</span><span class="mi">1</span><span class="p">]))),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Only take lines inside angle range</span>
+    <span class="c1"># Split into pairs of points</span>
+    <span class="n">lines2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="n">l</span><span class="p">[</span><span class="n">X</span><span class="p">],</span><span class="n">l</span><span class="p">[</span><span class="n">Y</span><span class="p">]],[</span><span class="n">l</span><span class="p">[</span><span class="n">X</span><span class="o">+</span><span class="mi">2</span><span class="p">],</span><span class="n">l</span><span class="p">[</span><span class="n">Y</span><span class="o">+</span><span class="mi">2</span><span class="p">]]]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">filteredlines</span><span class="p">])</span>
+    <span class="c1"># Sort each line by x values of points</span>
+    <span class="n">lines2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">l</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">l</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])]</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">lines2d</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">lines2d</span></div>
+
+
+<div class="viewcode-block" id="calcVROIs"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roifinding.calcVROIs">[docs]</a><span class="k">def</span> <span class="nf">calcVROIs</span><span class="p">(</span>
+    <span class="n">scan</span><span class="p">,</span>
+    <span class="n">minheight</span><span class="p">,</span>
+    <span class="n">maxgap</span><span class="p">,</span>
+    <span class="n">cutoff_frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">buffer</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate vertical regions of interest (VROIs) for a scan.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    scan : :obj:`.core.scan.Scan`</span>
+<span class="sd">        Scan to calculate VROIs for.</span>
+<span class="sd">    minheight : :obj:`float`</span>
+<span class="sd">        Minimum height of VROI.</span>
+<span class="sd">    maxgap : :obj:`int`</span>
+<span class="sd">        Maximum empty (no non-zero pixels) space allowed within a VROI.</span>
+<span class="sd">    cutoff_frac : :obj:`float`</span>
+<span class="sd">        Fraction of peak intensity to use as low-cut.</span>
+<span class="sd">    buffer : :obj:`int`</span>
+<span class="sd">        Extra space to add around VROI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">scan</span><span class="o">.</span><span class="n">getImg</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">img</span><span class="p">[</span><span class="n">img</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span>
+    <span class="n">vd</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">cvd</span> <span class="o">=</span> <span class="n">vd</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">cvd</span><span class="p">[</span><span class="n">cvd</span><span class="o">&lt;</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">vd</span><span class="p">)</span><span class="o">*</span><span class="n">cutoff_frac</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">vroistart</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">lastsaw</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">vrois</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">scan</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="n">Y</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">cvd</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># If in a stretch</span>
+            <span class="n">lastsaw</span> <span class="o">=</span> <span class="n">x</span>
+            <span class="k">if</span> <span class="n">vroistart</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="n">vroistart</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="k">elif</span> <span class="n">vroistart</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">x</span><span class="o">-</span><span class="n">lastsaw</span> <span class="o">&gt;</span> <span class="n">maxgap</span><span class="p">:</span> <span class="c1"># If at a zero and empty stretch is fraction of roi so far</span>
+            <span class="k">if</span> <span class="n">lastsaw</span><span class="o">-</span><span class="n">vroistart</span> <span class="o">&gt;</span> <span class="n">minheight</span><span class="p">:</span> <span class="c1"># If the length of thr roi is more than the minimum, complete it</span>
+                <span class="n">lo</span> <span class="o">=</span> <span class="n">vroistart</span><span class="o">-</span><span class="n">buffer</span> <span class="k">if</span> <span class="n">vroistart</span><span class="o">&gt;</span><span class="n">buffer</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="n">hi</span> <span class="o">=</span> <span class="n">lastsaw</span><span class="o">+</span><span class="n">buffer</span> <span class="k">if</span> <span class="p">(</span><span class="n">lastsaw</span><span class="o">+</span><span class="n">buffer</span><span class="p">)</span><span class="o">&lt;</span><span class="n">scan</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="n">Y</span><span class="p">]</span> <span class="k">else</span> <span class="n">scan</span><span class="o">.</span><span class="n">dims</span><span class="p">[</span><span class="n">Y</span><span class="p">]</span>
+                <span class="n">vrois</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VROI</span><span class="p">(</span><span class="n">lo</span><span class="p">,</span> <span class="n">hi</span><span class="p">))</span>
+                <span class="n">vroistart</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">vroistart</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">if</span> <span class="n">vroistart</span><span class="o">!=-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">lastsaw</span><span class="o">-</span><span class="n">vroistart</span> <span class="o">&gt;</span> <span class="n">minheight</span><span class="p">:</span>
+        <span class="n">vrois</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vrois</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">VROI</span><span class="p">(</span><span class="n">vroistart</span><span class="p">,</span> <span class="n">lastsaw</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">vrois</span></div>
+
+
+<span class="c1"># def calcVROIs(</span>
+<span class="c1">#     scan:Scan,</span>
+<span class="c1">#     approx_height:Number,</span>
+<span class="c1">#     min_separation:Number=None, #TODO</span>
+<span class="c1">#     tightness=0.75</span>
+<span class="c1">#     ) -&gt; Tuple[VROI]:</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     Function that calculates vertical regions of interest (VROIs) for each scan</span>
+<span class="c1">#     in a scan set. Each VROI is encoded as the y-pixel number of the center of</span>
+<span class="c1">#     the region and the total width of the region in vertical pixels.</span>
+<span class="c1">#</span>
+<span class="c1">#     Args:</span>
+<span class="c1">#         scanset: set of scans to calculate VROIs for</span>
+<span class="c1">#</span>
+<span class="c1">#     Returns:</span>
+<span class="c1">#         VROIs: Dictionary keyed by scan energy of VROIs encoded as y pixel</span>
+<span class="c1">#             values in tuple (center, width)</span>
+<span class="c1">#         numregions: Dictionary keyed by scan energy of number of possible ROIs</span>
+<span class="c1">#     &quot;&quot;&quot;</span>
+<span class="c1">#     img = scan.getImg().copy()</span>
+<span class="c1">#     img[img&gt;0]=1</span>
+<span class="c1">#     print(np.max(img))</span>
+<span class="c1">#     vertdensity = img.sum(0)</span>
+<span class="c1">#     blurv = gaussian_filter(vertdensity, sigma=approx_height) # Assumes calbration range covers entire CCD</span>
+<span class="c1">#     peaks, _ = find_peaks(blurv, height=blurv.min()+(blurv.max()-blurv.min())/10)  # peaks &gt;10% max, measured from min</span>
+<span class="c1">#     rel_height = tightness #if len(peaks) == 1 else 1</span>
+<span class="c1">#     width_data = peak_widths(blurv, peaks, rel_height=rel_height)</span>
+<span class="c1">#     vrois = [VROI(p-w/2,p+w/2) for p,w in zip(peaks, width_data[0])]</span>
+<span class="c1">#     return (vrois)  # Convert to tuple since shouldn&#39;t be modified later</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Argonne National Laboratory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

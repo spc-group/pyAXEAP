@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>axeap.utils package &mdash; pyAXEAP 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="axeap.experiment package" href="axeap.experiment.html" />
+    <link rel="prev" title="axeap.core package" href="axeap.core.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pyAXEAP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="axeap.core.html">axeap.core package</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">axeap.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.utils.utils">axeap.utils.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="axeap.experiment.html">axeap.experiment package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axeap.inspect.html">axeap.inspect package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyAXEAP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>axeap.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/axeap.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="axeap-utils-package">
+<h1>axeap.utils package<a class="headerlink" href="#axeap-utils-package" title="Permalink to this headline"></a></h1>
+<section id="module-axeap.utils.utils">
+<span id="axeap-utils-utils-module"></span><h2>axeap.utils.utils module<a class="headerlink" href="#module-axeap.utils.utils" title="Permalink to this headline"></a></h2>
+<p>Utility functions.</p>
+<p>This file contains generic utility functions for doing simple simple math or
+string operations.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.utils.utils.getCoordsFromImage">
+<span class="sig-prename descclassname"><span class="pre">axeap.utils.utils.</span></span><span class="sig-name descname"><span class="pre">getCoordsFromImage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsample</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/utils/utils.html#getCoordsFromImage"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.utils.utils.getCoordsFromImage" title="Permalink to this definition"></a></dt>
+<dd><p>Gets the list of non-zero pixels from an image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image</strong> (<em>array_like</em>) – 2D array of intensity values, indexable as <cite>image[x][y]</cite>.</p></li>
+<li><p><strong>area</strong> (<em>array_like</em><em>, </em><em>optional</em>) – Rectangular area to extract coordinates of, given as bottom left corner
+and top right corner in form [[x1,y1],[x2,y2]].</p></li>
+<li><p><strong>subsample</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – Fraction of points to randomly sample and return, default is to return
+all points.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of points in the form (x,y,z) where x and y are the pixel position
+and z is the pixel value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.utils.utils.get_trailing_number">
+<span class="sig-prename descclassname"><span class="pre">axeap.utils.utils.</span></span><span class="sig-name descname"><span class="pre">get_trailing_number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/utils/utils.html#get_trailing_number"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.utils.utils.get_trailing_number" title="Permalink to this definition"></a></dt>
+<dd><p>Get number at the end of a string.</p>
+<p>Used primarily for extracting number from filename. For example, a file
+whose stem is ‘Image021’ will have the number 21 extracted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – String to get trailing number from.</p></li>
+<li><p><strong>default</strong> (<em>any</em><em>, </em><em>optional</em>) – Default value to return if no number found.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Number extracted from end of string.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.utils.utils.linearlen">
+<span class="sig-prename descclassname"><span class="pre">axeap.utils.utils.</span></span><span class="sig-name descname"><span class="pre">linearlen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">s</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/utils/utils.html#linearlen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.utils.utils.linearlen" title="Permalink to this definition"></a></dt>
+<dd><p>Get length of a span from endpoints of span.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Used to make some code look nicer, but may be removed in future due it being
+a very simple operation.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>array_like</em>) – Span in form [x1,x2] where x1 and x2 are ends of span.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Length of span as absolute difference between x1 and x2.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.utils.utils.linearoverlap">
+<span class="sig-prename descclassname"><span class="pre">axeap.utils.utils.</span></span><span class="sig-name descname"><span class="pre">linearoverlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/utils/utils.html#linearoverlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.utils.utils.linearoverlap" title="Permalink to this definition"></a></dt>
+<dd><p>Get overlap between two ranges as fraction of length of each range.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>l1</strong> (<em>array_like</em>) – First range, given in form [x1,x2] where x1 and x2 are ends of range.</p></li>
+<li><p><strong>l2</strong> (<em>array_like</em>) – Second range, same form as l1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Fraction of each range that overlaps with the other, in form
+(fraction of l1 that overlaps, fraction of l2 that overlaps).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.utils.utils.separateSpans">
+<span class="sig-prename descclassname"><span class="pre">axeap.utils.utils.</span></span><span class="sig-name descname"><span class="pre">separateSpans</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spans</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/utils/utils.html#separateSpans"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.utils.utils.separateSpans" title="Permalink to this definition"></a></dt>
+<dd><p>Remove overlap between spans.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>spans</strong> (<em>array_like</em>) – List of spans in form [x1,x2] where x1 and x2 are endpoints of span.</p></li>
+<li><p><strong>buffer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Amount of space to separate overlapping spans by, must be a positive
+number.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of spans after being separated.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="axeap.core.html" class="btn btn-neutral float-left" title="axeap.core package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="axeap.experiment.html" class="btn btn-neutral float-right" title="axeap.experiment package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Argonne National Laboratory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

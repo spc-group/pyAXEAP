@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>axeap.core.roi &mdash; pyAXEAP 0.0.1 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../../index.html" class="icon icon-home"> pyAXEAP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.core.html">axeap.core package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.utils.html">axeap.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.experiment.html">axeap.experiment package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../axeap.inspect.html">axeap.inspect package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyAXEAP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      <li>axeap.core.roi</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for axeap.core.roi</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;Region of Interest (ROI)</span>
+
+<span class="sd">ROIs define regions of an image.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">.conventions</span> <span class="kn">import</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span>
+<span class="kn">from</span> <span class="nn">.item</span> <span class="kn">import</span> <span class="n">DataItem</span><span class="p">,</span> <span class="n">DataItemSet</span>
+
+<div class="viewcode-block" id="ROI"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.ROI">[docs]</a><span class="k">class</span> <span class="nc">ROI</span><span class="p">(</span><span class="n">DataItem</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Region of Interest superclass.</span>
+
+<span class="sd">    Used as parent of specific ROIs. Do not instantiate directly.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_selectArea</span><span class="p">(</span><span class="n">img</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set all areas of image not in ROI to 0.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        img : :obj:`numpy.ndarray`</span>
+<span class="sd">            The image to process.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;ROI is an abstract class and should not be instantiated&quot;</span><span class="p">)</span>
+
+    <span class="c1"># def apply(self, scan:Scan) -&gt; Scan:</span>
+    <span class="c1">#     return Scan(self._selectArea(scan.getImg()).filled(0))</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ROI()&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Hash is computed as hash of string representation of ROI. String</span>
+<span class="sd">        representation must therefore be comprehensive of data encoded by ROI.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span><span class="s1">&#39;ascii&#39;</span><span class="p">)))</span>   <span class="c1"># Hack much?</span></div>
+
+
+<div class="viewcode-block" id="ComboROI"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.ComboROI">[docs]</a><span class="k">class</span> <span class="nc">ComboROI</span><span class="p">(</span><span class="n">ROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ROI composed of a combination of other ROIs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ComboROI.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.ComboROI.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">rois</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        *rois : List of :obj:`ROI`)</span>
+<span class="sd">            The component ROIs to combine.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ROI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">comps</span> <span class="o">=</span> <span class="n">rois</span>   <span class="c1"># Component ROIs</span></div>
+
+    <span class="k">def</span> <span class="nf">_selectArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="n">invmask</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">roi</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comps</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">invmask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">invmask</span> <span class="o">=</span> <span class="o">~</span><span class="n">roi</span><span class="o">.</span><span class="n">_selectArea</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">mask</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">invmask</span> <span class="o">=</span> <span class="n">invmask</span> <span class="o">+</span> <span class="o">~</span><span class="n">roi</span><span class="o">.</span><span class="n">_selectArea</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">mask</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span> <span class="o">~</span><span class="n">invmask</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;ComboROI(&quot;</span><span class="o">+</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;,&#39;</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">comps</span><span class="p">])</span><span class="o">+</span><span class="s2">&quot;)&quot;</span></div>
+
+
+<div class="viewcode-block" id="RectangleROI"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.RectangleROI">[docs]</a><span class="k">class</span> <span class="nc">RectangleROI</span><span class="p">(</span><span class="n">ROI</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Rectangular ROI</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="RectangleROI.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.RectangleROI.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        p1 : array-like</span>
+<span class="sd">            Coordinates (x,y) of one corner of rectangular.</span>
+<span class="sd">        p2 : array-like</span>
+<span class="sd">            Coordinates (x,y) of diagonally opposite corner to `p1`.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">ROI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lox</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hix</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">p1</span><span class="p">[</span><span class="n">X</span><span class="p">],</span><span class="n">p2</span><span class="p">[</span><span class="n">X</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">loy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiy</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="n">p1</span><span class="p">[</span><span class="n">Y</span><span class="p">],</span><span class="n">p2</span><span class="p">[</span><span class="n">Y</span><span class="p">]))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lox</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">loy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiy</span> <span class="o">=</span> \
+            <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lox</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">loy</span><span class="p">)),</span> \
+            <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hix</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hiy</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="RectangleROI.fromHVROIs"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.RectangleROI.fromHVROIs">[docs]</a>    <span class="k">def</span> <span class="nf">fromHVROIs</span><span class="p">(</span><span class="n">hroi</span><span class="p">,</span> <span class="n">vroi</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;Create Rectangular ROI from horizontal and vertical ROIs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        hroi : :obj:`HROI`</span>
+<span class="sd">            Horizontal ROI.</span>
+<span class="sd">        vroi : :obj:`.VROI`</span>
+<span class="sd">            Vertical ROI.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`RectangleROI`</span>
+<span class="sd">            Rectangular ROI spanning vertical and horizontal regions.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">RectangleROI</span><span class="p">((</span><span class="n">hroi</span><span class="o">.</span><span class="n">lo</span><span class="p">,</span> <span class="n">vroi</span><span class="o">.</span><span class="n">lo</span><span class="p">),</span> <span class="p">(</span><span class="n">hroi</span><span class="o">.</span><span class="n">hi</span><span class="p">,</span> <span class="n">vroi</span><span class="o">.</span><span class="n">hi</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_selectArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="c1"># Use slices to create no-copy view</span>
+        <span class="c1"># return np.ma.array(img[self.lox:self.hix+1,</span>
+        <span class="c1">#                     self.loy:self.hiy+1], copy=False)</span>
+        <span class="c1"># Let&#39;s try masks instead</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">mask</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lox</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">hix</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">loy</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">hiy</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;RectangleROI((</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lox</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">loy</span><span class="si">}</span><span class="s2">), (</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hix</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hiy</span><span class="si">}</span><span class="s2">))&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lox</span><span class="o">==</span><span class="n">other</span><span class="o">.</span><span class="n">lox</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">loy</span><span class="o">==</span><span class="n">other</span><span class="o">.</span><span class="n">loy</span> <span class="ow">and</span> \
+                    <span class="bp">self</span><span class="o">.</span><span class="n">hix</span><span class="o">==</span><span class="n">other</span><span class="o">.</span><span class="n">hix</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">hiy</span><span class="o">==</span><span class="n">other</span><span class="o">.</span><span class="n">hiy</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="k">def</span> <span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ROI</span><span class="o">.</span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EllipseROI"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.EllipseROI">[docs]</a><span class="k">class</span> <span class="nc">EllipseROI</span><span class="p">(</span><span class="n">ROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ellipse-shaped ROI&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="EllipseROI.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.EllipseROI.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        p : array-like</span>
+<span class="sd">            Coordinates (x,y) for center of ellipse.</span>
+<span class="sd">        rx : :obj:`float`</span>
+<span class="sd">            Radius along x-axis.</span>
+<span class="sd">        ry : :obj:`float`</span>
+<span class="sd">            Radius along y-axis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ROI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ry</span> <span class="o">=</span> <span class="o">*</span><span class="n">p</span><span class="p">,</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span></div>
+
+    <span class="k">def</span> <span class="nf">_selectArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">ry</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">ry</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="c1">#print(&#39;y&#39;, y)</span>
+            <span class="n">halfwidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">-</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">ry</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">lox</span><span class="p">,</span> <span class="n">hix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">-</span><span class="n">halfwidth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">+</span><span class="n">halfwidth</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">lox</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">hix</span><span class="p">),</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="c1">#print(&#39;x&#39;, x)</span>
+                <span class="n">mask</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+        <span class="c1"># Could use cv2.ellipse instead</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;EllipseROI((</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">),&quot;</span> \
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rx</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ry</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+<div class="viewcode-block" id="SpanROI"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.SpanROI">[docs]</a><span class="k">class</span> <span class="nc">SpanROI</span><span class="p">(</span><span class="n">ROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Abstract superclass to :obj:`HROI` and :obj:`VROI`. Do not instantiate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SpanROI.__init__"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.SpanROI.__init__">[docs]</a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        p1 : :obj:`float`</span>
+<span class="sd">            Lower end of span.</span>
+<span class="sd">        p2 : :obj:`float`</span>
+<span class="sd">            Higher end of span.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ROI</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hi</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">p1</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">p2</span><span class="p">))))</span></div>
+
+    <span class="k">def</span> <span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hi</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="HROI"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.HROI">[docs]</a><span class="k">class</span> <span class="nc">HROI</span><span class="p">(</span><span class="n">SpanROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ROI spanning range along x-axis.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_selectArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">mask</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lo</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">hi</span><span class="o">+</span><span class="mi">1</span><span class="p">,:]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;HROI(x=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lo</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hi</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">RectangleROI</span><span class="o">.</span><span class="n">fromHVROIs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VROI"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.VROI">[docs]</a><span class="k">class</span> <span class="nc">VROI</span><span class="p">(</span><span class="n">SpanROI</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ROI spanning range along y-axis.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_selectArea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">mask</span><span class="p">[:,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lo</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">hi</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;VROI(y=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">lo</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">hi</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">RectangleROI</span><span class="o">.</span><span class="n">fromHVROIs</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ROISet"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.ROISet">[docs]</a><span class="k">class</span> <span class="nc">ROISet</span><span class="p">(</span><span class="n">DataItemSet</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;:obj:`.core.item.DataItemSet` for :obj:`ROI`&#39;s</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ROISet.getROIsInside"><a class="viewcode-back" href="../../../axeap.core.html#axeap.core.roi.ROISet.getROIsInside">[docs]</a>    <span class="k">def</span> <span class="nf">getROIsInside</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nroi</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get ROIs in set contained by given ROI</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        nroi : :obj:`ROI`</span>
+<span class="sd">            ROI used to choose ROIs from set.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        :obj:`list`</span>
+<span class="sd">            List of ROIs contained in nroi.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nroi</span><span class="p">,</span> <span class="n">RectangleROI</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span>   <span class="c1"># TODO: Add functionality for non-rectangular ROIs</span>
+        <span class="n">inside</span> <span class="o">=</span> <span class="p">[</span><span class="n">roi</span> <span class="k">for</span> <span class="n">roi</span> <span class="ow">in</span> <span class="bp">self</span> <span class="k">if</span> \
+            <span class="n">roi</span><span class="o">.</span><span class="n">lox</span> <span class="o">&gt;=</span> <span class="n">nroi</span><span class="o">.</span><span class="n">lox</span> <span class="ow">and</span> <span class="n">roi</span><span class="o">.</span><span class="n">loy</span> <span class="o">&gt;=</span> <span class="n">nroi</span><span class="o">.</span><span class="n">loy</span> <span class="ow">and</span> \
+            <span class="n">roi</span><span class="o">.</span><span class="n">hix</span> <span class="o">&lt;=</span> <span class="n">nroi</span><span class="o">.</span><span class="n">hix</span> <span class="ow">and</span> <span class="n">roi</span><span class="o">.</span><span class="n">hiy</span> <span class="o">&lt;=</span> <span class="n">nroi</span><span class="o">.</span><span class="n">hiy</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">inside</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Argonne National Laboratory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

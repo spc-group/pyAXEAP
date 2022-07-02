@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>axeap.core package &mdash; pyAXEAP 0.0.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="axeap.utils package" href="axeap.utils.html" />
+    <link rel="prev" title="pyAXEAP Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> pyAXEAP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">axeap.core package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.core.conventions">axeap.core.conventions module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.core.emap">axeap.core.emap module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.core.item">axeap.core.item module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.core.roi">axeap.core.roi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.core.roifinding">axeap.core.roifinding module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.core.scan">axeap.core.scan module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.core.signal">axeap.core.signal module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-axeap.core.spectra">axeap.core.spectra module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="axeap.utils.html">axeap.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axeap.experiment.html">axeap.experiment package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="axeap.inspect.html">axeap.inspect package</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyAXEAP</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>axeap.core package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/axeap.core.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="axeap-core-package">
+<h1>axeap.core package<a class="headerlink" href="#axeap-core-package" title="Permalink to this headline"></a></h1>
+<section id="module-axeap.core.conventions">
+<span id="axeap-core-conventions-module"></span><h2>axeap.core.conventions module<a class="headerlink" href="#module-axeap.core.conventions" title="Permalink to this headline"></a></h2>
+<p>Conventions.
+Shorthands and enums used throughout axeap.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.conventions.PathType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.conventions.</span></span><span class="sig-name descname"><span class="pre">PathType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/conventions.html#PathType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.conventions.PathType" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/enum.html#enum.Enum" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></a></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.conventions.PathType.DIR">
+<span class="sig-name descname"><span class="pre">DIR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#axeap.core.conventions.PathType.DIR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.conventions.PathType.FILE">
+<span class="sig-name descname"><span class="pre">FILE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#axeap.core.conventions.PathType.FILE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.conventions.PathType.FILES">
+<span class="sig-name descname"><span class="pre">FILES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#axeap.core.conventions.PathType.FILES" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-axeap.core.emap">
+<span id="axeap-core-emap-module"></span><h2>axeap.core.emap module<a class="headerlink" href="#module-axeap.core.emap" title="Permalink to this headline"></a></h2>
+<p>Energy Map</p>
+<p>Energy maps are 2D arrays the same size as a XES image where each pixel in value
+in the energymap corresponds to an energy. Thus when a pixel is excited in an
+image, the corresponding energy is added to the spectra with an intensity
+corresponding to the energy of the pixel.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.emap.</span></span><span class="sig-name descname"><span class="pre">EnergyMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eres</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/emap.html#EnergyMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.emap.EnergyMap" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.DataItem</span></code></a>, <a class="reference internal" href="#axeap.core.item.Saveable" title="axeap.core.item.Saveable"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.Saveable</span></code></a>, <a class="reference internal" href="#axeap.core.item.Loadable" title="axeap.core.item.Loadable"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.Loadable</span></code></a></p>
+<p>Class representing a mapping of pixels onto energies.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.LOAD_FILE_EXTENTIONS">
+<span class="sig-name descname"><span class="pre">LOAD_FILE_EXTENTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['npy']</span></em><a class="headerlink" href="#axeap.core.emap.EnergyMap.LOAD_FILE_EXTENTIONS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.LOAD_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">LOAD_PATH_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#axeap.core.emap.EnergyMap.LOAD_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.SAVE_FILE_EXTENTIONS">
+<span class="sig-name descname"><span class="pre">SAVE_FILE_EXTENTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['npy']</span></em><a class="headerlink" href="#axeap.core.emap.EnergyMap.SAVE_FILE_EXTENTIONS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.SAVE_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">SAVE_PATH_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#axeap.core.emap.EnergyMap.SAVE_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.TYPE_NAME">
+<span class="sig-name descname"><span class="pre">TYPE_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'EnergyMap'</span></em><a class="headerlink" href="#axeap.core.emap.EnergyMap.TYPE_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eres</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/emap.html#EnergyMap.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.emap.EnergyMap.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – 2D array containing energy corresponding to each pixel</p></li>
+<li><p><strong>eres</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Energy resolution corresponding to mapping, units of eV/pixel</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.calcSpectra">
+<span class="sig-name descname"><span class="pre">calcSpectra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/emap.html#EnergyMap.calcSpectra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.emap.EnergyMap.calcSpectra" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate spectra from scan.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>scan</strong> (<a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scan.Scan</span></code></a>) – Scan to calculate spectra from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Spectra object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.spectra.Spectra" title="axeap.core.spectra.Spectra">Spectra</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.dims">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dims</span></span><a class="headerlink" href="#axeap.core.emap.EnergyMap.dims" title="Permalink to this definition"></a></dt>
+<dd><p>Get dimensions of energy map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Shape of energy map as (x, y).</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)">tuple</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.eres">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">eres</span></span><a class="headerlink" href="#axeap.core.emap.EnergyMap.eres" title="Permalink to this definition"></a></dt>
+<dd><p>Get the energy resolution (eV/pixel) for the energy map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Stored value if set in constructor, else estimates resolution from
+map values.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.loadFromPath">
+<span class="sig-name descname"><span class="pre">loadFromPath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/emap.html#EnergyMap.loadFromPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.emap.EnergyMap.loadFromPath" title="Permalink to this definition"></a></dt>
+<dd><p>Load energy map from file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fpath</strong> (<em>Path</em>) – Path of file from which to load energy map.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Energy map loaded from file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.emap.EnergyMap" title="axeap.core.emap.EnergyMap">EnergyMap</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.emap.EnergyMap.saveToPath">
+<span class="sig-name descname"><span class="pre">saveToPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/emap.html#EnergyMap.saveToPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.emap.EnergyMap.saveToPath" title="Permalink to this definition"></a></dt>
+<dd><p>Save energy map to file.</p>
+<p>Energy resolution is not saved. This will be added in the future.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fpath</strong> (<em>Path</em>) – Path of file to which to save energy map</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.core.emap.calcEMap">
+<span class="sig-prename descclassname"><span class="pre">axeap.core.emap.</span></span><span class="sig-name descname"><span class="pre">calcEMap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scanset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hrois</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/emap.html#calcEMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.emap.calcEMap" title="Permalink to this definition"></a></dt>
+<dd><p>Function that calculates an pixel-to-energy mapping (an energy map) from a
+set of scans and the horizontal pixel ranges (the groups) that have been
+determined to correspond to different crystals in the scans.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scanset</strong> (<a class="reference internal" href="#axeap.core.scan.ScanSet" title="axeap.core.scan.ScanSet"><em>ScanSet</em></a>) – Set of calibration scans.</p></li>
+<li><p><strong>hrois</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><em>list</em></a>) – List of <a class="reference internal" href="#axeap.core.roi.HROI" title="axeap.core.roi.HROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.roi.HROI</span></code></a> corresponding to each crystal.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D array same size as scans of energy values
+corresponding to each pixel.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-axeap.core.item">
+<span id="axeap-core-item-module"></span><h2>axeap.core.item module<a class="headerlink" href="#module-axeap.core.item" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.item.DataItem">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.item.</span></span><span class="sig-name descname"><span class="pre">DataItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItem" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Superclass for all data-containing objects.</p>
+<p>This is the superclass for objects such as <a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.scan.Scan</span></code></a> or
+<a class="reference internal" href="#axeap.core.spectra.Spectra" title="axeap.core.spectra.Spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.spectra.Spectra</span></code></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.DataItem.TYPE_NAME">
+<span class="sig-name descname"><span class="pre">TYPE_NAME</span></span><a class="headerlink" href="#axeap.core.item.DataItem.TYPE_NAME" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the data item type, for example “Scan”. Same across all
+instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.DataItem.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#axeap.core.item.DataItem.name" title="Permalink to this definition"></a></dt>
+<dd><p>The name of the data item, not necessarily unique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.DataItem.uuid">
+<span class="sig-name descname"><span class="pre">uuid</span></span><a class="headerlink" href="#axeap.core.item.DataItem.uuid" title="Permalink to this definition"></a></dt>
+<dd><p>UUID of the data item. Unique.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">uuid.UUID</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.DataItem.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><a class="headerlink" href="#axeap.core.item.DataItem.meta" title="Permalink to this definition"></a></dt>
+<dd><p>Dictionary of metadata describing instance of DataItem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">TYPE_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DataItem'</span></em><a class="headerlink" href="#id0" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.DataItem.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItem.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItem.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>, optional) – Name to assign to item. Should be human-readable, not necessarily
+unique.</p></li>
+<li><p><strong>meta</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a>, optional) – Metadata concerning the item. Keys should be strings.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.item.</span></span><span class="sig-name descname"><span class="pre">DataItemSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItemSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItemSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Set of <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItem</span></code></a> objects.</p>
+<p>This is essentially just a list of <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItem</span></code></a> objects but
+with the additional features of allowing items to be “selected” or not and
+emitting signals when the membership of the <a class="reference internal" href="#axeap.core.item.DataItemSet" title="axeap.core.item.DataItemSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItemSet</span></code></a> changes or
+the selection status of one of the <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItem</span></code></a>’s changes. This is
+the superclass for <a class="reference internal" href="#axeap.core.scan.ScanSet" title="axeap.core.scan.ScanSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.scan.ScanSet</span></code></a>, <a class="reference internal" href="#axeap.core.roi.ROISet" title="axeap.core.roi.ROISet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.roi.ROISet</span></code></a>, and
+<a class="reference internal" href="#axeap.core.spectra.SpectraSet" title="axeap.core.spectra.SpectraSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.spectra.SpectraSet</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Though this uses a list to store the underlying data, users should not
+depend on the order of the items in the set.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.itemadded">
+<span class="sig-name descname"><span class="pre">itemadded</span></span><a class="headerlink" href="#axeap.core.item.DataItemSet.itemadded" title="Permalink to this definition"></a></dt>
+<dd><p>When item is added, signal is emitted with item as argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.signal.Signal" title="axeap.core.signal.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.signal.Signal</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.itemremoved">
+<span class="sig-name descname"><span class="pre">itemremoved</span></span><a class="headerlink" href="#axeap.core.item.DataItemSet.itemremoved" title="Permalink to this definition"></a></dt>
+<dd><p>When item is removed, signal emitted with item as argument.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.signal.Signal" title="axeap.core.signal.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.signal.Signal</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.selectionchanged">
+<span class="sig-name descname"><span class="pre">selectionchanged</span></span><a class="headerlink" href="#axeap.core.item.DataItemSet.selectionchanged" title="Permalink to this definition"></a></dt>
+<dd><p>When item selection is changed, signal emitted with signature (item,
+selection).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.signal.Signal" title="axeap.core.signal.Signal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.signal.Signal</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItemSet.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItemSet.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>items</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional) – List of <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItem</span></code></a> objects to initially populate the
+<a class="reference internal" href="#axeap.core.item.DataItemSet" title="axeap.core.item.DataItemSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItemSet</span></code></a>.</p></li>
+<li><p><strong>selection_default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, optional) – Default selection value for items after being added to set. Default
+default value is <cite>True</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItemSet.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItemSet.add" title="Permalink to this definition"></a></dt>
+<dd><p>Add <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItem</span></code></a> to set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.getSelected">
+<span class="sig-name descname"><span class="pre">getSelected</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItemSet.getSelected"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItemSet.getSelected" title="Permalink to this definition"></a></dt>
+<dd><p>Get list of selected items.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.getSelection">
+<span class="sig-name descname"><span class="pre">getSelection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItemSet.getSelection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItemSet.getSelection" title="Permalink to this definition"></a></dt>
+<dd><p>Get selection status of item.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItemSet.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItemSet.remove" title="Permalink to this definition"></a></dt>
+<dd><p>Remove <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItem</span></code></a> from set.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.DataItemSet.setSelection">
+<span class="sig-name descname"><span class="pre">setSelection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">item</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sel</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#DataItemSet.setSelection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.DataItemSet.setSelection" title="Permalink to this definition"></a></dt>
+<dd><p>Change selection status of <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItem</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item</strong> (<a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataItem</span></code></a>) – Item whose selection status to change.</p></li>
+<li><p><strong>sel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>) – New selection status.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.item.Loadable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.item.</span></span><span class="sig-name descname"><span class="pre">Loadable</span></span><a class="reference internal" href="_modules/axeap/core/item.html#Loadable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.Loadable" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Superclass for any object that can be loaded from a file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.Loadable.LOAD_FILE_EXTENTIONS">
+<span class="sig-name descname"><span class="pre">LOAD_FILE_EXTENTIONS</span></span><a class="headerlink" href="#axeap.core.item.Loadable.LOAD_FILE_EXTENTIONS" title="Permalink to this definition"></a></dt>
+<dd><p>List of strings containing file extensions that the object can be loaded
+from. Extensions are lowercase and do not include dots (example “txt”
+instead of “.TXT”). Should be overwritten by subclass definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.Loadable.SAVE_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">SAVE_PATH_TYPE</span></span><a class="headerlink" href="#axeap.core.item.Loadable.SAVE_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd><p>Specifies whether the object can be loaded from a file, multiple files,
+or a directory. Should be overwritten by subclass but constant across
+instances.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.conventions.PathType" title="axeap.core.conventions.PathType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.conventions.PathType</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">LOAD_FILE_EXTENTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id1" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.Loadable.LOAD_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">LOAD_PATH_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#axeap.core.item.Loadable.LOAD_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.Loadable.loadFromFile">
+<span class="sig-name descname"><span class="pre">loadFromFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#Loadable.loadFromFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.Loadable.loadFromFile" title="Permalink to this definition"></a></dt>
+<dd><p>Load data from file and use to instantiate class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Path of file containing data.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Instance of object, populated with data from file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.item.Loadable" title="axeap.core.item.Loadable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Loadable</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.item.Saveable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.item.</span></span><span class="sig-name descname"><span class="pre">Saveable</span></span><a class="reference internal" href="_modules/axeap/core/item.html#Saveable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.Saveable" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Superclass for any object that can be saved to a file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.Saveable.SAVE_FILE_EXTENTIONS">
+<span class="sig-name descname"><span class="pre">SAVE_FILE_EXTENTIONS</span></span><a class="headerlink" href="#axeap.core.item.Saveable.SAVE_FILE_EXTENTIONS" title="Permalink to this definition"></a></dt>
+<dd><p>List of strings containing file extensions that the object can be saved
+under. Extensions are lowercase and do not include dots (example “txt”
+instead of “.TXT”). Should be overwritten in subclass definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.item.Saveable.SAVE_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">SAVE_PATH_TYPE</span></span><a class="headerlink" href="#axeap.core.item.Saveable.SAVE_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd><p>Specifies whether the object can be saved as a file or a directory.
+Should be overwritten by subclass definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.conventions.PathType" title="axeap.core.conventions.PathType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.conventions.PathType</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">SAVE_FILE_EXTENTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#id2" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">SAVE_PATH_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#id3" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.item.Saveable.saveToPath">
+<span class="sig-name descname"><span class="pre">saveToPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/item.html#Saveable.saveToPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.item.Saveable.saveToPath" title="Permalink to this definition"></a></dt>
+<dd><p>Save data stored in object to a given path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Path to store object data to. Could be file or directory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-axeap.core.roi">
+<span id="axeap-core-roi-module"></span><h2>axeap.core.roi module<a class="headerlink" href="#module-axeap.core.roi" title="Permalink to this headline"></a></h2>
+<p>Region of Interest (ROI)</p>
+<p>ROIs define regions of an image.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.roi.ComboROI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.roi.</span></span><span class="sig-name descname"><span class="pre">ComboROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">rois</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#ComboROI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.ComboROI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.roi.ROI" title="axeap.core.roi.ROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.roi.ROI</span></code></a></p>
+<p>ROI composed of a combination of other ROIs.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.roi.ComboROI.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">rois</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#ComboROI.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.ComboROI.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>*rois</strong> (List of <a class="reference internal" href="#axeap.core.roi.ROI" title="axeap.core.roi.ROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ROI</span></code></a>)) – The component ROIs to combine.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.roi.EllipseROI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.roi.</span></span><span class="sig-name descname"><span class="pre">EllipseROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ry</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#EllipseROI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.EllipseROI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.roi.ROI" title="axeap.core.roi.ROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.roi.ROI</span></code></a></p>
+<p>Ellipse-shaped ROI</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.roi.EllipseROI.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ry</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#EllipseROI.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.EllipseROI.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>array-like</em>) – Coordinates (x,y) for center of ellipse.</p></li>
+<li><p><strong>rx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Radius along x-axis.</p></li>
+<li><p><strong>ry</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Radius along y-axis.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.roi.HROI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.roi.</span></span><span class="sig-name descname"><span class="pre">HROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#HROI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.HROI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.roi.SpanROI" title="axeap.core.roi.SpanROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.roi.SpanROI</span></code></a></p>
+<p>ROI spanning range along x-axis.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.roi.ROI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.roi.</span></span><span class="sig-name descname"><span class="pre">ROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#ROI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.ROI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.DataItem</span></code></a></p>
+<p>Region of Interest superclass.</p>
+<p>Used as parent of specific ROIs. Do not instantiate directly.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.roi.ROISet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.roi.</span></span><span class="sig-name descname"><span class="pre">ROISet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#ROISet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.ROISet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.item.DataItemSet" title="axeap.core.item.DataItemSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.DataItemSet</span></code></a></p>
+<p><a class="reference internal" href="#axeap.core.item.DataItemSet" title="axeap.core.item.DataItemSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.item.DataItemSet</span></code></a> for <a class="reference internal" href="#axeap.core.roi.ROI" title="axeap.core.roi.ROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ROI</span></code></a>’s</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.roi.ROISet.getROIsInside">
+<span class="sig-name descname"><span class="pre">getROIsInside</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nroi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#ROISet.getROIsInside"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.ROISet.getROIsInside" title="Permalink to this definition"></a></dt>
+<dd><p>Get ROIs in set contained by given ROI</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>nroi</strong> (<a class="reference internal" href="#axeap.core.roi.ROI" title="axeap.core.roi.ROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ROI</span></code></a>) – ROI used to choose ROIs from set.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of ROIs contained in nroi.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.roi.RectangleROI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.roi.</span></span><span class="sig-name descname"><span class="pre">RectangleROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#RectangleROI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.RectangleROI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.roi.ROI" title="axeap.core.roi.ROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.roi.ROI</span></code></a></p>
+<p>Rectangular ROI</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.roi.RectangleROI.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#RectangleROI.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.RectangleROI.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> (<em>array-like</em>) – Coordinates (x,y) of one corner of rectangular.</p></li>
+<li><p><strong>p2</strong> (<em>array-like</em>) – Coordinates (x,y) of diagonally opposite corner to <cite>p1</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.roi.RectangleROI.fromHVROIs">
+<span class="sig-name descname"><span class="pre">fromHVROIs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vroi</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#RectangleROI.fromHVROIs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.RectangleROI.fromHVROIs" title="Permalink to this definition"></a></dt>
+<dd><p>Create Rectangular ROI from horizontal and vertical ROIs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hroi</strong> (<a class="reference internal" href="#axeap.core.roi.HROI" title="axeap.core.roi.HROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HROI</span></code></a>) – Horizontal ROI.</p></li>
+<li><p><strong>vroi</strong> (<a class="reference internal" href="#axeap.core.roi.VROI" title="axeap.core.roi.VROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VROI</span></code></a>) – Vertical ROI.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Rectangular ROI spanning vertical and horizontal regions.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.roi.RectangleROI" title="axeap.core.roi.RectangleROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RectangleROI</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.roi.SpanROI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.roi.</span></span><span class="sig-name descname"><span class="pre">SpanROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#SpanROI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.SpanROI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.roi.ROI" title="axeap.core.roi.ROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.roi.ROI</span></code></a></p>
+<p>Abstract superclass to <a class="reference internal" href="#axeap.core.roi.HROI" title="axeap.core.roi.HROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HROI</span></code></a> and <a class="reference internal" href="#axeap.core.roi.VROI" title="axeap.core.roi.VROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VROI</span></code></a>. Do not instantiate.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.roi.SpanROI.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#SpanROI.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.SpanROI.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p1</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Lower end of span.</p></li>
+<li><p><strong>p2</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Higher end of span.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.roi.VROI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.roi.</span></span><span class="sig-name descname"><span class="pre">VROI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p2</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roi.html#VROI"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roi.VROI" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.roi.SpanROI" title="axeap.core.roi.SpanROI"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.roi.SpanROI</span></code></a></p>
+<p>ROI spanning range along y-axis.</p>
+</dd></dl>
+
+</section>
+<section id="module-axeap.core.roifinding">
+<span id="axeap-core-roifinding-module"></span><h2>axeap.core.roifinding module<a class="headerlink" href="#module-axeap.core.roifinding" title="Permalink to this headline"></a></h2>
+<p>Automatic Calculation of Regions of Interest.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.core.roifinding.calcHROIs">
+<span class="sig-prename descclassname"><span class="pre">axeap.core.roifinding.</span></span><span class="sig-name descname"><span class="pre">calcHROIs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_lines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roifinding.html#calcHROIs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roifinding.calcHROIs" title="Permalink to this definition"></a></dt>
+<dd><p>Static function to separate image into columns based on line segments found
+in image.</p>
+<p>This works by combining line segements that overlap in their horizontal
+ranges by more than 50% of their length to form groups. These groups are
+then trimmed so as to not overlap. This is meant to be used with _calcLines
+to find the horizontal ranges of pixels in the scan image that correspond to
+each crystal. However, if two crystals are lined up such that they produce
+a single line segment in the image, this function will create one group
+spanning both crystals.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scan</strong> (<a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.scan.Scan</span></code></a>) – Scan to calculate horizontal regions of interest for.</p></li>
+<li><p><strong>group_buffer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – Minimum number of pixels to separate groups by.</p></li>
+<li><p><strong>return_lines</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>) – Whether or not to return the lines segments detected in the image.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> – List of <code class="xref py py-obj docutils literal notranslate"><span class="pre">core.roi.HROI</span></code>’s representing regions corresponding to
+each crystal.</p></li>
+<li><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">np.ndarray</span></code>, optional – Array of line segments detected in image, encoded as [[x1,y1],[x2,y2]].
+Returned if <code class="docutils literal notranslate"><span class="pre">return_lines</span></code> is set <a class="reference external" href="https://docs.python.org/3/library/constants.html#True" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">True</span></code></a>.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.core.roifinding.calcHorizontalLineSegments">
+<span class="sig-prename descclassname"><span class="pre">axeap.core.roifinding.</span></span><span class="sig-name descname"><span class="pre">calcHorizontalLineSegments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_line_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anglerange</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roifinding.html#calcHorizontalLineSegments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roifinding.calcHorizontalLineSegments" title="Permalink to this definition"></a></dt>
+<dd><p>Function that calculates line segments from scan.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scan</strong> (<a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scan.Scan</span></code></a>) – Scan to calculate lines from.</p></li>
+<li><p><strong>min_line_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Minimum length line segments must be.</p></li>
+<li><p><strong>anglerange</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>) – Range of angles that line segments must be within. Horizontal is 0,
+vertical is pi/2. Range encoded as (t1,t2).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Array of line segments encoded as [[x1,y1],[x2,y2]]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.core.roifinding.calcVROIs">
+<span class="sig-prename descclassname"><span class="pre">axeap.core.roifinding.</span></span><span class="sig-name descname"><span class="pre">calcVROIs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">minheight</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">maxgap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cutoff_frac</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/roifinding.html#calcVROIs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.roifinding.calcVROIs" title="Permalink to this definition"></a></dt>
+<dd><p>Calculate vertical regions of interest (VROIs) for a scan.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>scan</strong> (<a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.scan.Scan</span></code></a>) – Scan to calculate VROIs for.</p></li>
+<li><p><strong>minheight</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Minimum height of VROI.</p></li>
+<li><p><strong>maxgap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – Maximum empty (no non-zero pixels) space allowed within a VROI.</p></li>
+<li><p><strong>cutoff_frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Fraction of peak intensity to use as low-cut.</p></li>
+<li><p><strong>buffer</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – Extra space to add around VROI.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-axeap.core.scan">
+<span id="axeap-core-scan-module"></span><h2>axeap.core.scan module<a class="headerlink" href="#module-axeap.core.scan" title="Permalink to this headline"></a></h2>
+<p>Scan.
+The Scan class represents an image from a PAD detector. This file contains all
+code relating to Scans.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.scan.CalibRunInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.scan.</span></span><span class="sig-name descname"><span class="pre">CalibRunInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#CalibRunInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.CalibRunInfo" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Class that represents the settings used during the collection of a set of
+calibration scans.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.CalibRunInfo.energies">
+<span class="sig-name descname"><span class="pre">energies</span></span><a class="headerlink" href="#axeap.core.scan.CalibRunInfo.energies" title="Permalink to this definition"></a></dt>
+<dd><p>List of energies scans were taken at.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.CalibRunInfo.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#CalibRunInfo.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.CalibRunInfo.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fpath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Path of file containing information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="id4">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">energies</span></span><a class="headerlink" href="#id4" title="Permalink to this definition"></a></dt>
+<dd><p>Get list of energies used to take scans</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.CalibRunInfo.getEnergy">
+<span class="sig-name descname"><span class="pre">getEnergy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#CalibRunInfo.getEnergy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.CalibRunInfo.getEnergy" title="Permalink to this definition"></a></dt>
+<dd><p>Get energy used to take scan by scan number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) – Index of scan (0 for first scan, 1 for second, etc).</p></li>
+<li><p><strong>Returns</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>:param <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>: Energy of scan</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.CalibRunInfo.getIncidentIntensity">
+<span class="sig-name descname"><span class="pre">getIncidentIntensity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#CalibRunInfo.getIncidentIntensity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.CalibRunInfo.getIncidentIntensity" title="Permalink to this definition"></a></dt>
+<dd><p>Get incident intensity that a scan was taken with.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>i</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>) – Scan number or scan energy.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Incident x-ray intensity scan was taken with.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.IS">
+<span class="sig-prename descclassname"><span class="pre">axeap.core.scan.</span></span><span class="sig-name descname"><span class="pre">IS</span></span><a class="headerlink" href="#axeap.core.scan.IS" title="Permalink to this definition"></a></dt>
+<dd><p>Alias for ImageSpec.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.scan.ImageSpec">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.scan.</span></span><span class="sig-name descname"><span class="pre">ImageSpec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basespec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cuts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#ImageSpec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.ImageSpec" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a></p>
+<p>Class representing specifications applied to scan image.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.ImageSpec.NOBLUR">
+<span class="sig-name descname"><span class="pre">NOBLUR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#axeap.core.scan.ImageSpec.NOBLUR" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="axeap.core.scan.ImageSpec.NOCHANGE">
+<em class="property"><span class="pre">class</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NOCHANGE</span></span><a class="reference internal" href="_modules/axeap/core/scan.html#ImageSpec.NOCHANGE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.ImageSpec.NOCHANGE" title="Permalink to this definition"></a></dt>
+<dd><p>An ImageSpec that signifies no change to be made to an image.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.ImageSpec.NOCUTS">
+<span class="sig-name descname"><span class="pre">NOCUTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#axeap.core.scan.ImageSpec.NOCUTS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.ImageSpec.NOROI">
+<span class="sig-name descname"><span class="pre">NOROI</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#axeap.core.scan.ImageSpec.NOROI" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.ImageSpec.NOSCALE">
+<span class="sig-name descname"><span class="pre">NOSCALE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">-1</span></em><a class="headerlink" href="#axeap.core.scan.ImageSpec.NOSCALE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.ImageSpec.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">basespec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cuts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blur</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#ImageSpec.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.ImageSpec.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>basespec</strong> (<a class="reference internal" href="#axeap.core.scan.ImageSpec" title="axeap.core.scan.ImageSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageSpec</span></code></a>) – <a class="reference internal" href="#axeap.core.scan.ImageSpec" title="axeap.core.scan.ImageSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageSpec</span></code></a> to use as default values.</p></li>
+<li><p><strong>cuts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>, optional) – Pair of values (l,h) where any pixel values with intensity &lt;l or
+&gt;h are set to 0.</p></li>
+<li><p><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – Number to scale all intensity values in image by.</p></li>
+<li><p><strong>blur</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>, optional) – Kernel size of gaussian blur to apply to image.</p></li>
+<li><p><strong>roi</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">core.ROI</span></code>, optional) – Region of interest to which to restrict image. The rest of the image
+will be masked off.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.scan.</span></span><span class="sig-name descname"><span class="pre">Scan</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgspec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.item.DataItem" title="axeap.core.item.DataItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.DataItem</span></code></a>, <a class="reference internal" href="#axeap.core.item.Saveable" title="axeap.core.item.Saveable"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.Saveable</span></code></a>, <a class="reference internal" href="#axeap.core.item.Loadable" title="axeap.core.item.Loadable"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.Loadable</span></code></a></p>
+<p>Class representing a scan image taken with a XES detector.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.LOAD_FILE_EXTENTIONS">
+<span class="sig-name descname"><span class="pre">LOAD_FILE_EXTENTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['tiff',</span> <span class="pre">'tif',</span> <span class="pre">'scan']</span></em><a class="headerlink" href="#axeap.core.scan.Scan.LOAD_FILE_EXTENTIONS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.SAVE_FILE_EXTENTIONS">
+<span class="sig-name descname"><span class="pre">SAVE_FILE_EXTENTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['tif',</span> <span class="pre">'png',</span> <span class="pre">'scan']</span></em><a class="headerlink" href="#axeap.core.scan.Scan.SAVE_FILE_EXTENTIONS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.SAVE_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">SAVE_PATH_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#axeap.core.scan.Scan.SAVE_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.TYPE_NAME">
+<span class="sig-name descname"><span class="pre">TYPE_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scan'</span></em><a class="headerlink" href="#axeap.core.scan.Scan.TYPE_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgspec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – 2D array of intensity values</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Name for the scan.</p></li>
+<li><p><strong>cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code></a>) – Pass <a class="reference external" href="https://docs.python.org/3/library/constants.html#False" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">False</span></code></a> to turn off cacheing of images. An
+already-prepared cache of images in the form a dictionary of image
+specs to images can also be passed. Do not use unless you know what
+you’re doing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan.count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan.count" title="Permalink to this definition"></a></dt>
+<dd><p>Count total intensity within ROI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>roi</strong> (<a class="reference internal" href="#axeap.core.roi.ROI" title="axeap.core.roi.ROI"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.roi.ROI</span></code></a>, optional) – Region of Interest to restrict count to. If not given, region is
+considered to be entire scan.</p></li>
+<li><p><strong>Returns</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>:param <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>: Total intensity summed over region.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.dims">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dims</span></span><a class="headerlink" href="#axeap.core.scan.Scan.dims" title="Permalink to this definition"></a></dt>
+<dd><p>Dimensions of scan image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Dimensions of scan image in form (x,y).</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.getImg">
+<span class="sig-name descname"><span class="pre">getImg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan.getImg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan.getImg" title="Permalink to this definition"></a></dt>
+<dd><p>Get 2D array of intensity values associated with scan, optionally
+pre-processed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cuts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>, optional) – Pair of values (l,h) where any pixel values with intensity &lt;l or
+&gt;h are set to 0.</p></li>
+<li><p><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – Number to scale all intensity values in image by.</p></li>
+<li><p><strong>blur</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>, optional) – Kernel size of gaussian blur to apply to image.</p></li>
+<li><p><strong>roi</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">core.ROI</span></code>, optional) – Region of interest to which to restrict image. The rest of the image
+will be masked off.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D array of intensity values representing image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.getImgFromSpecs">
+<span class="sig-name descname"><span class="pre">getImgFromSpecs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imgspec</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan.getImgFromSpecs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan.getImgFromSpecs" title="Permalink to this definition"></a></dt>
+<dd><p>Get image after applying imagespec.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>imgspec</strong> (<a class="reference internal" href="#axeap.core.scan.ImageSpec" title="axeap.core.scan.ImageSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageSpec</span></code></a>)) – Specifications for image.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D array representing image.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.loadFromPath">
+<span class="sig-name descname"><span class="pre">loadFromPath</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan.loadFromPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan.loadFromPath" title="Permalink to this definition"></a></dt>
+<dd><p>Load scan data from file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Path to file containing image data.</p></li>
+<li><p><strong>Returns</strong> – </p></li>
+</ul>
+</dd>
+</dl>
+<p>:param <a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scan</span></code></a>: Scan object containing data from file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.loadImageFromFile">
+<span class="sig-name descname"><span class="pre">loadImageFromFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan.loadImageFromFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan.loadImageFromFile" title="Permalink to this definition"></a></dt>
+<dd><p>Load an image from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fpath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Path of image file (either TIF or NPY).</p></li>
+<li><p><strong>Returns</strong> – <cite>numpy.ndarray</cite>: 2D image data array.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.mod">
+<span class="sig-name descname"><span class="pre">mod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan.mod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan.mod" title="Permalink to this definition"></a></dt>
+<dd><p>Return scan with a different default imgspec.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cuts</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tuple</span></code></a>, optional) – Pair of values (l,h) where any pixel values with intensity &lt;l or
+&gt;h are set to 0.</p></li>
+<li><p><strong>scale</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>, optional) – Number to scale all intensity values in image by.</p></li>
+<li><p><strong>blur</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>, optional) – Kernel size of gaussian blur to apply to image.</p></li>
+<li><p><strong>roi</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">core.ROI</span></code>, optional) – Region of interest to which to restrict image. The rest of the image
+will be masked off.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Scan object with given default imgspec.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scan</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scan'</span></em><a class="headerlink" href="#axeap.core.scan.Scan.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.Scan.saveToPath">
+<span class="sig-name descname"><span class="pre">saveToPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#Scan.saveToPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.Scan.saveToPath" title="Permalink to this definition"></a></dt>
+<dd><p>Save scan to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fpath</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>) – Path of file to which to save scan.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.scan.</span></span><span class="sig-name descname"><span class="pre">ScanSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scans</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">imgdims</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#ScanSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.ScanSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.item.DataItemSet" title="axeap.core.item.DataItemSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.DataItemSet</span></code></a>, <a class="reference internal" href="#axeap.core.item.Loadable" title="axeap.core.item.Loadable"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.Loadable</span></code></a></p>
+<p><a class="reference internal" href="#axeap.core.item.DataItemSet" title="axeap.core.item.DataItemSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.item.DataItemSet</span></code></a> for <a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scan</span></code></a> objects.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet.DEFAULT_IMGDIMS">
+<span class="sig-name descname"><span class="pre">DEFAULT_IMGDIMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(100,</span> <span class="pre">100)</span></em><a class="headerlink" href="#axeap.core.scan.ScanSet.DEFAULT_IMGDIMS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet.LOAD_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">LOAD_PATH_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#axeap.core.scan.ScanSet.LOAD_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet.TYPE_NAME">
+<span class="sig-name descname"><span class="pre">TYPE_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Scan</span> <span class="pre">Set'</span></em><a class="headerlink" href="#axeap.core.scan.ScanSet.TYPE_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scan</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#ScanSet.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.ScanSet.add" title="Permalink to this definition"></a></dt>
+<dd><p>Add Scan to set.</p>
+<p>See <a class="reference internal" href="#axeap.core.item.DataItemSet.add" title="axeap.core.item.DataItemSet.add"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.item.DataItemSet.add</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet.addCalibRunInfo">
+<span class="sig-name descname"><span class="pre">addCalibRunInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runinfo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#ScanSet.addCalibRunInfo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.ScanSet.addCalibRunInfo" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Populate metadata of scans with calibration run information (incident</dt><dd><p>energy, intensity, etc).</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>runinfo</strong> (<a class="reference internal" href="#axeap.core.scan.CalibRunInfo" title="axeap.core.scan.CalibRunInfo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CalibRunInfo</span></code></a>) – Calibration run information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet.composite">
+<span class="sig-name descname"><span class="pre">composite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">imgkwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#ScanSet.composite"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.ScanSet.composite" title="Permalink to this definition"></a></dt>
+<dd><p>Create scan by adding images from all selected scans in set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>imgkwargs</strong> (<a class="reference internal" href="#axeap.core.scan.ImageSpec" title="axeap.core.scan.ImageSpec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageSpec</span></code></a>) – Specifications to apply to image extracted from each
+<a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scan</span></code></a>.</p></li>
+<li><p><strong>Returns</strong> – <dl class="simple">
+<dt><a class="reference internal" href="#axeap.core.scan.Scan" title="axeap.core.scan.Scan"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scan</span></code></a></dt><dd><p>Scan object representing combined image.</p>
+</dd>
+</dl>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet.dims">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dims</span></span><a class="headerlink" href="#axeap.core.scan.ScanSet.dims" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.scan.ScanSet.loadFromPath">
+<span class="sig-name descname"><span class="pre">loadFromPath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">calibinfopath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/scan.html#ScanSet.loadFromPath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.scan.ScanSet.loadFromPath" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-axeap.core.signal">
+<span id="axeap-core-signal-module"></span><h2>axeap.core.signal module<a class="headerlink" href="#module-axeap.core.signal" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.signal.Signal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.signal.</span></span><span class="sig-name descname"><span class="pre">Signal</span></span><a class="reference internal" href="_modules/axeap/core/signal.html#Signal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.signal.Signal" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Signal that can trigger distribution of data to all connected functions.</p>
+<p>This class is used for a barebones event system. <code class="docutils literal notranslate"><span class="pre">Signal</span></code> objects are
+owned as visible attributes of objects. Callables, including methods of
+other objects, can be connected to this signal. These callables are referred
+to as the “listeners” of the signal. Then when the object that owns the
+signal emits it, all the connected listeners are called (in the order that
+they were connected) with arguments specified in the <code class="docutils literal notranslate"><span class="pre">emit()</span></code> call.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.signal.Signal.connect">
+<span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/signal.html#Signal.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.signal.Signal.connect" title="Permalink to this definition"></a></dt>
+<dd><p>Connects a listener callable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">callable</span></code></a>) – The listener to connect to the signal.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.signal.Signal.disconnect">
+<span class="sig-name descname"><span class="pre">disconnect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/signal.html#Signal.disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.signal.Signal.disconnect" title="Permalink to this definition"></a></dt>
+<dd><p>Disconnect a listener callable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#callable" title="(in Python v3.10)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">callable</span></code></a>) – The listener to disconnect from the signal.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.signal.Signal.emit">
+<span class="sig-name descname"><span class="pre">emit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/signal.html#Signal.emit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.signal.Signal.emit" title="Permalink to this definition"></a></dt>
+<dd><p>Emit the signal.</p>
+<p>All connected listeners are called with the given arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – Positional arguments to send to listeners.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments to send to listeners.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-axeap.core.spectra">
+<span id="axeap-core-spectra-module"></span><h2>axeap.core.spectra module<a class="headerlink" href="#module-axeap.core.spectra" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.spectra.Spectra">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.spectra.</span></span><span class="sig-name descname"><span class="pre">Spectra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/spectra.html#Spectra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.spectra.Spectra" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.item.Saveable" title="axeap.core.item.Saveable"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.Saveable</span></code></a>, <a class="reference internal" href="#axeap.core.item.Loadable" title="axeap.core.item.Loadable"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.Loadable</span></code></a></p>
+<p>Class representing a spectra, indicating intensity over a range of energies.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.spectra.Spectra.LOAD_FILE_EXTENTIONS">
+<span class="sig-name descname"><span class="pre">LOAD_FILE_EXTENTIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['npy']</span></em><a class="headerlink" href="#axeap.core.spectra.Spectra.LOAD_FILE_EXTENTIONS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.spectra.Spectra.LOAD_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">LOAD_PATH_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#axeap.core.spectra.Spectra.LOAD_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.spectra.Spectra.SAVE_PATH_TYPE">
+<span class="sig-name descname"><span class="pre">SAVE_PATH_TYPE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['npy']</span></em><a class="headerlink" href="#axeap.core.spectra.Spectra.SAVE_PATH_TYPE" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="axeap.core.spectra.Spectra.TYPE_NAME">
+<span class="sig-name descname"><span class="pre">TYPE_NAME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Spectra'</span></em><a class="headerlink" href="#axeap.core.spectra.Spectra.TYPE_NAME" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.spectra.Spectra.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/spectra.html#Spectra.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.spectra.Spectra.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>energies</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List of energies.</p></li>
+<li><p><strong>intensities</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – List of intensities corresponding to each energy.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.spectra.Spectra.loadFromFile">
+<span class="sig-name descname"><span class="pre">loadFromFile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/spectra.html#Spectra.loadFromFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.spectra.Spectra.loadFromFile" title="Permalink to this definition"></a></dt>
+<dd><p>Load spectra from file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fpath</strong> (<em>path</em>) – Path of file from which to load spectra.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Spectra with data loaded from file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#axeap.core.spectra.Spectra" title="axeap.core.spectra.Spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spectra</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="axeap.core.spectra.Spectra.saveToFile">
+<span class="sig-name descname"><span class="pre">saveToFile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/spectra.html#Spectra.saveToFile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.spectra.Spectra.saveToFile" title="Permalink to this definition"></a></dt>
+<dd><p>Save spectra to file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fpath</strong> (<em>path</em>) – Path of file to which to save spectra.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="axeap.core.spectra.SpectraSet">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">axeap.core.spectra.</span></span><span class="sig-name descname"><span class="pre">SpectraSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spectra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selection_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/spectra.html#SpectraSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.spectra.SpectraSet" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#axeap.core.item.DataItemSet" title="axeap.core.item.DataItemSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">axeap.core.item.DataItemSet</span></code></a></p>
+<p><a class="reference internal" href="#axeap.core.item.DataItemSet" title="axeap.core.item.DataItemSet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">core.item.DataItemSet</span></code></a> for <a class="reference internal" href="#axeap.core.spectra.Spectra" title="axeap.core.spectra.Spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Spectra</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="axeap.core.spectra.calcSpectra">
+<span class="sig-prename descclassname"><span class="pre">axeap.core.spectra.</span></span><span class="sig-name descname"><span class="pre">calcSpectra</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emap</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">evres</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/axeap/core/spectra.html#calcSpectra"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#axeap.core.spectra.calcSpectra" title="Permalink to this definition"></a></dt>
+<dd><p>Generates spectra from image and energy map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>emap</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – 2D array of energy values.</p></li>
+<li><p><strong>image</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>) – 2D array of intensity values, same size as emap.</p></li>
+<li><p><strong>evres</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – Resolution of spectra in number of eVs.</p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – Normalize the spectra so peak has intensity 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>2D array structured as list of energy-intensity pairs.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="pyAXEAP Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="axeap.utils.html" class="btn btn-neutral float-right" title="axeap.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Argonne National Laboratory.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
